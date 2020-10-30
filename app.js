@@ -521,9 +521,7 @@ const checkAppointment = async (sender_psid, appointment_ref) => {
 
     if (snapshot.empty) {
         let response = { "text": "Incorrect ref number" };
-        callSend(sender_psid, response).then(() => {
-            return startGreeting(sender_psid);
-        });
+        callSend(sender_psid, response);
     } else {
         let appointment = {}
 
