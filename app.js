@@ -109,6 +109,7 @@ app.post('/test', function(req, res) {
 });
 app.get('/admin/appointments', async function(req, res) {
     const appointmentsRef = db.collection('appointments');
+    // const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1);
     const snapshot = await appointmentsRef.get();
     if (snapshot.empty) {
         res.send('no data');
@@ -300,8 +301,7 @@ function handleQuickReply(sender_psid, received_message) {
         let brand = received_message.slice(6);
         userInputs[user_id].brand = brand;
         shwoToyota(sender_psid);
-    }
-     else {
+    } else {
         switch (received_message) {
             case "on":
                 showQuickReplyOn(sender_psid);
@@ -327,42 +327,52 @@ const handleMessage = (sender_psid, received_message) => {
     if (received_message.attachments) {
         handleAttachments(sender_psid, received_message.attachments);
     } else if (received_message.text == 'toyota') {
-      console.log('BRAND ENTERED', received_message.text);
-      
+        console.log('BRAND ENTERED', received_message.text);
+
     } else if (current_question == 'q1') {
-      console.log('DATE ENTERED', received_message.text);
-      userInputs[user_id].date = received_message.text;
-      current_question = 'q2';
-      botQuestions(current_question, sender_psid);
+        console.log('DATE ENTERED', received_message.text);
+        userInputs[user_id].date = received_message.text;
+        current_question = 'q2';
+        botQuestions(current_question, sender_psid);
     } else if (current_question == 'q2') {
-      console.log('TIME ENTERED', received_message.text);
-      userInputs[user_id].time = received_message.text;
-      current_question = 'q3';
-      botQuestions(current_question, sender_psid);
+        console.log('TIME ENTERED', received_message.text);
+        userInputs[user_id].time = received_message.text;
+        current_question = 'q3';
+        botQuestions(current_question, sender_psid);
     } else if (current_question == 'q3') {
-      console.log('FULL NAME ENTERED', received_message.text);
-      userInputs[user_id].name = received_message.text;
-      current_question = 'q4';
-      botQuestions(current_question, sender_psid);
+        console.log('FULL NAME ENTERED', received_message.text);
+        userInputs[user_id].name = received_message.text;
+        current_question = 'q4';
+        botQuestions(current_question, sender_psid);
     } else if (current_question == 'q4') {
-      console.log('PHONE NUMBER ENTERED', received_message.text);
-      userInputs[user_id].phone = received_message.text;
-      current_question = 'q5';
-      botQuestions(current_question, sender_psid);
+        console.log('PHONE NUMBER ENTERED', received_message.text);
+        userInputs[user_id].phone = received_message.text;
+        current_question = 'q5';
+        botQuestions(current_question, sender_psid);
     } else if (current_question == 'q5') {
-      console.log('location ENTERED', received_message.text);
-      userInputs[user_id].location = received_message.text;
-      current_question = 'q6';
-      botQuestions(current_question, sender_psid);
+        console.log('location ENTERED', received_message.text);
+        userInputs[user_id].location = received_message.text;
+        current_question = 'q6';
+        botQuestions(current_question, sender_psid);
     } else if (current_question == 'q6') {
-      console.log('MESSAGE ENTERED', received_message.text);
-      userInputs[user_id].message = received_message.text;
-      current_question = '';
-      confirmAppointment(sender_psid);
+        console.log('MESSAGE ENTERED', received_message.text);
+        userInputs[user_id].message = received_message.text;
+        current_question = '';
+        confirmAppointment(sender_psid);
+    } else if (current_question == 'q7') {
+        let appointment_ref = received_message.text;
+
+        console.log('appointment_ref: ', appointment_ref);
+        current_question = '';
+        checkAppointment(sender_psid, appointment_ref);
     } else {
         let user_message = received_message.text;
         user_message = user_message.toLowerCase();
         switch (user_message) {
+            case "check":
+                current_question = "q7";
+                botQuestions(current_question, sender_psid);
+                break;
             case "hi":
                 hiReply(sender_psid);
                 break;
@@ -502,32 +512,34 @@ function webviewTest(sender_psid) {
     }
     callSendAPI(sender_psid, response);
 }
-/**************
-start hospital
-**************/
-const hospitalAppointment = (sender_psid) => {
-    let response1 = {
-        "text": "Welcome to Made By Nadi"
-    };
-    let response2 = {
-        "text": "Please select a package",
-        "quick_replies": [{
-            "content_type": "text",
-            "title": "Wedding",
-            "payload": "department:Wedding",
-        }, {
-            "content_type": "text",
-            "title": "Graduation",
-            "payload": "department:Graduation",
-        }, {
-            "content_type": "text",
-            "title": "Donation",
-            "payload": "department:Donation",
-        }]
-    };
-    callSend(sender_psid, response1).then(() => {
-        return callSend(sender_psid, response2);
-    });
+const checkAppointment = async (sender_psid, appointment_ref) => {
+
+    const appoinmentRef = db.collection('appointments').where("ref", "==", appointment_ref).limit(1);
+    const snapshot = await appoinmentRef.get();
+
+
+    if (snapshot.empty) {
+        let response = { "text": "Incorrect ref number" };
+        callSend(sender_psid, response).then(() => {
+            return startGreeting(sender_psid);
+        });
+    } else {
+        let appointment = {}
+
+        snapshot.forEach(doc => {
+            appointment.ref = doc.data().ref;
+            appointment.status = doc.data().status;
+            appointment.message = doc.data().message;
+        });
+
+
+        let response1 = { "text": `Your appointment ${appointment.ref} is ${appointment.status}.` };
+        let response2 = { "text": `Admin message: ${appointment.message}.` };
+        callSend(sender_psid, response1).then(() => {
+            return callSend(sender_psid, response2)
+        });
+    }
+
 }
 const showPackage = (sender_psid) => {
     let response = {
@@ -596,6 +608,11 @@ const botQuestions = (current_question, sender_psid) => {
             "text": bot_questions.q6
         };
         callSend(sender_psid, response);
+    } else if (current_question == 'q7') {
+        let response = {
+            "text": bot_questions.q7
+        };
+        callSend(sender_psid, response);
     }
 }
 const confirmAppointment = (sender_psid) => {
@@ -644,9 +661,7 @@ const saveAppointment = (arg, sender_psid) => {
         console.log('Error', err);
     });
 }
-/**************
-end hospital
-**************/
+
 const hiReply = (sender_psid) => {
     let response = {
         "attachment": {
@@ -730,7 +745,7 @@ const shwoToyota = (sender_psid) => {
                     "title": "Toyota Mark 2,2000model,2.0cc, Regalia",
                     "image_url": "https://i.imgur.com/edMypcb.jpg",
                     "subtitle": "MMK : 250 lkh",
-                   "default_action": {
+                    "default_action": {
                         "type": "web_url",
                         "url": "https://www.facebook.com/101330348122237/posts/140544484200823/",
                         "webview_height_ratio": "tall",
