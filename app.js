@@ -27,6 +27,7 @@ const bot_questions = {
     "q4": "Would you like to leave a phone number",
     "q5": "Where do you want to look the car? PS : Customers are most viewd at Tea Shop, Car Market Place, Restaurants and so on.",
     "q6": "Please leave a message",
+    "q7": "Please enter reference no"
 }
 let current_question = '';
 let user_id = '';
