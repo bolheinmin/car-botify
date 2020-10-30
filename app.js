@@ -528,11 +528,12 @@ const checkAppointment = async (sender_psid, appointment_ref) => {
         snapshot.forEach(doc => {
             appointment.ref = doc.data().ref;
             appointment.status = doc.data().status;
+            appointment.name = doc.data().name;
             // appointment.comment = doc.data().comment;
         });
 
 
-        let response1 = { "text": `Your appointment ${appointment.ref} is ${appointment.status}.` };
+        let response1 = { "text": `Hello ${appointment.name}. Your appointment ${appointment.ref} is ${appointment.status}.` };
         // let response2 = { "text": `Admin comment: ${appointment.comment}.` };
         callSend(sender_psid, response1);
         // .then(() => {
