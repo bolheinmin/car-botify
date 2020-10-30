@@ -147,7 +147,7 @@ app.post('/admin/updateappointment', function(req, res) {
         name: req.body.name,
         phone: req.body.phone,
         brand: req.body.brand,
-        address: req.body.address,
+        location: req.body.location,
         visit: req.body.visit,
         date: req.body.date,
         time: req.body.time,
@@ -356,8 +356,8 @@ const handleMessage = (sender_psid, received_message) => {
       current_question = 'q5';
       botQuestions(current_question, sender_psid);
     } else if (current_question == 'q5') {
-      console.log('ADDRESS ENTERED', received_message.text);
-      userInputs[user_id].address = received_message.text;
+      console.log('location ENTERED', received_message.text);
+      userInputs[user_id].location = received_message.text;
       current_question = 'q6';
       botQuestions(current_question, sender_psid);
     } else if (current_question == 'q6') {
@@ -627,7 +627,7 @@ const confirmAppointment = (sender_psid) => {
     summery += "time:" + userInputs[user_id].time + "\u000A";
     summery += "name:" + userInputs[user_id].name + "\u000A";
     summery += "phone:" + userInputs[user_id].phone + "\u000A";
-    summery += "address:" + userInputs[user_id].address + "\u000A";
+    summery += "location:" + userInputs[user_id].location + "\u000A";
     summery += "message:" + userInputs[user_id].message + "\u000A";
     let response1 = {
         "text": summery
@@ -716,7 +716,7 @@ const showBrands = (sender_psid) => {
         "quick_replies": [{
             "content_type": "text",
             "title": "Toyota",
-            "payload": "brand:toyota",
+            "payload": "brand:Toyota",
         }, {
             "content_type": "text",
             "title": "Suzuki",
