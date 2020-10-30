@@ -149,6 +149,7 @@ app.post('/admin/updateappointment', function(req, res) {
         name: req.body.name,
         phone: req.body.phone,
         brand: req.body.brand,
+        type: req.body.type,
         location: req.body.location,
         date: req.body.date,
         time: req.body.time,
@@ -327,9 +328,6 @@ const handleMessage = (sender_psid, received_message) => {
     let response;
     if (received_message.attachments) {
         handleAttachments(sender_psid, received_message.attachments);
-    } else if (received_message.text == 'toyota') {
-        console.log('BRAND ENTERED', received_message.text);
-
     } else if (current_question == 'q1') {
         console.log('DATE ENTERED', received_message.text);
         userInputs[user_id].date = received_message.text;
@@ -428,10 +426,10 @@ Function to handle when user click button
 const handlePostback = (sender_psid, received_postback) => {
     let payload = received_postback.payload;
     console.log('BUTTON PAYLOAD', payload);
-    if (payload.startsWith("Toyota:")) {
-        let toyota_name = payload.slice(7);
-        console.log('SELECTED PACKAGE IS: ', toyota_name);
-        userInputs[user_id].toyota = toyota_name;
+    if (payload.startsWith("Type:")) {
+        let type_name = payload.slice(5);
+        console.log('SELECTED PACKAGE IS: ', type_name);
+        userInputs[user_id].type = type_name;
         console.log('TEST', userInputs);
         current_question = 'q1';
         botQuestions(current_question, sender_psid);
@@ -619,7 +617,7 @@ const botQuestions = (current_question, sender_psid) => {
 const confirmAppointment = (sender_psid) => {
     console.log('APPOINTMENT INFO', userInputs);
     let summery = "brand:" + userInputs[user_id].brand + "\u000A";
-    summery += "toyota:" + userInputs[user_id].toyota + "\u000A";
+    summery += "type:" + userInputs[user_id].type + "\u000A";
     summery += "date:" + userInputs[user_id].date + "\u000A";
     summery += "time:" + userInputs[user_id].time + "\u000A";
     summery += "name:" + userInputs[user_id].name + "\u000A";
@@ -758,7 +756,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Toyota:Toyota Mark 2,2000model,2.0cc, Regalia",
+                        "payload": "Type:Toyota Mark 2,2000model,2.0cc, Regalia",
                     }]
                 }, {
                     "title": "Toyota Brevis 2001,3.0cc",
@@ -776,7 +774,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Toyota:Toyota Brevis 2001,3.0cc",
+                        "payload": "Type:Toyota Brevis 2001,3.0cc",
                     }]
                 }, {
                     "title": "Toyota Belta 2009",
@@ -794,7 +792,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Toyota:Toyota Belta 2009",
+                        "payload": "Type:Toyota Belta 2009",
                     }]
                 }, {
                     "title": "2007 Toyota Ractics",
@@ -812,7 +810,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Toyota:2007 Toyota Ractics",
+                        "payload": "Type:2007 Toyota Ractics",
                     }]
                 }, {
                     "title": "Toyota Hilux surf 1999 SSR G",
@@ -830,7 +828,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Toyota:Toyota Hilux surf 1999 SSR G",
+                        "payload": "Type:Toyota Hilux surf 1999 SSR G",
                     }]
                 }, {
                     "title": "Toyota Parado 1997,TX package",
@@ -848,7 +846,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Toyota:Toyota Parado 1997,TX package",
+                        "payload": "Type:Toyota Parado 1997,TX package",
                     }]
                 }, {
                     "title": "2004 late Toyota Hilux Surf",
@@ -866,7 +864,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Toyota:2004 late Toyota Hilux Surf",
+                        "payload": "Type:2004 late Toyota Hilux Surf",
                     }]
                 }, {
                     "title": "Toyota Harrier 1999 G Package",
@@ -884,7 +882,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Toyota:Toyota Harrier 1999 G Package",
+                        "payload": "Type:Toyota Harrier 1999 G Package",
                     }]
                 }]
             }
