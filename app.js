@@ -148,7 +148,6 @@ app.post('/admin/updateappointment', function(req, res) {
         phone: req.body.phone,
         brand: req.body.brand,
         location: req.body.location,
-        visit: req.body.visit,
         date: req.body.date,
         time: req.body.time,
         message: req.body.message,
@@ -297,12 +296,7 @@ Function to Handle when user send quick reply message
 function handleQuickReply(sender_psid, received_message) {
     console.log('QUICK REPLY', received_message);
     received_message = received_message.toLowerCase();
-    if (received_message.startsWith("visit:")) {
-        let visit = received_message.slice(6);
-        userInputs[user_id].visit = visit;
-        current_question = 'q1';
-        botQuestions(current_question, sender_psid);
-    } else if (received_message.startsWith("brand:")) {
+    if (received_message.startsWith("brand:")) {
         let brand = received_message.slice(6);
         userInputs[user_id].brand = brand;
         shwoToyota(sender_psid);
@@ -428,7 +422,8 @@ const handlePostback = (sender_psid, received_postback) => {
         console.log('SELECTED PACKAGE IS: ', toyota_name);
         userInputs[user_id].toyota = toyota_name;
         console.log('TEST', userInputs);
-        firstOrFollowUp(sender_psid);
+        current_question = 'q1';
+        botQuestions(current_question, sender_psid);
     } else {
         switch (payload) {
             case "two":
@@ -570,21 +565,6 @@ const showPackage = (sender_psid) => {
     }
     callSend(sender_psid, response);
 }
-const firstOrFollowUp = (sender_psid) => {
-    let response = {
-        "text": "First Time Visit or Follow Up",
-        "quick_replies": [{
-            "content_type": "text",
-            "title": "First Time",
-            "payload": "visit:first time",
-        }, {
-            "content_type": "text",
-            "title": "Follow Up",
-            "payload": "visit:follow up",
-        }]
-    };
-    callSend(sender_psid, response);
-}
 const botQuestions = (current_question, sender_psid) => {
     if (current_question == 'q1') {
         let response = {
@@ -622,7 +602,6 @@ const confirmAppointment = (sender_psid) => {
     console.log('APPOINTMENT INFO', userInputs);
     let summery = "brand:" + userInputs[user_id].brand + "\u000A";
     summery += "toyota:" + userInputs[user_id].toyota + "\u000A";
-    summery += "visit:" + userInputs[user_id].visit + "\u000A";
     summery += "date:" + userInputs[user_id].date + "\u000A";
     summery += "time:" + userInputs[user_id].time + "\u000A";
     summery += "name:" + userInputs[user_id].name + "\u000A";
@@ -720,23 +699,23 @@ const showBrands = (sender_psid) => {
         }, {
             "content_type": "text",
             "title": "Suzuki",
-            "payload": "suzu",
+            "payload": "brand:Suzuki",
         }, {
             "content_type": "text",
             "title": "Honda",
-            "payload": "honda",
+            "payload": "brand:Honda",
         }, {
             "content_type": "text",
             "title": "Mitsubishi",
-            "payload": "mit",
+            "payload": "brand:Mitsubishi",
         }, {
             "content_type": "text",
             "title": "Dihatsu",
-            "payload": "dih",
+            "payload": "brand:Dihatsu",
         }, {
             "content_type": "text",
             "title": "Nissan",
-            "payload": "mini",
+            "payload": "brand:Nissan",
         }]
     };
     callSend(sender_psid, response);
