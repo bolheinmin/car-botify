@@ -151,7 +151,7 @@ app.get('/admin/appointments', async function(req, res) {
         let buyerAppointment = {};
         buyerAppointment = doc.data();
         buyerAppointment.doc_id = doc.id;
-        data.push(buyerAppointment);
+        buyerData.push(buyerAppointment);
     });
 
     // snapshot2.forEach(doc => {
