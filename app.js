@@ -670,7 +670,7 @@ const checkAppointment = async (sender_psid, appointment_ref) => {
     const snapshot2 = await buyerAppoinmentRef.get();
 
 
-    if (snapshot1.empty || snapshot2.empty) {
+    if (snapshot1.empty && snapshot2.empty) {
         let response = { "text": "Incorrect booking ref number" };
         callSend(sender_psid, response);
     } else {
