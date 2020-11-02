@@ -362,9 +362,24 @@ function handleQuickReply(sender_psid, received_message) {
     console.log('QUICK REPLY', received_message);
     received_message = received_message.toLowerCase();
     if (received_message == 'toyota') {
-        let brand = received_message;
-        userInputs[user_id].brand = brand;
+        // let brand = received_message;
+        userInputs[user_id].brand = 'Toyota';
         shwoToyota(sender_psid);
+    } else if (received_message == 'suzuki') {
+        userInputs[user_id].brand = 'Suzuki';
+        shwoSuzuki(sender_psid);
+    } else if (received_message == 'honda') {
+        userInputs[user_id].brand = 'Honda';
+        shwoHonda(sender_psid);
+    } else if (received_message == 'mitsubishi') {
+        userInputs[user_id].brand = 'Mitsubishi';
+        showMitsubishi(sender_psid);
+    } else if (received_message == 'dihatsu') {
+        userInputs[user_id].brand == 'Dihatsu';
+        showDihatsu(sender_psid);
+    } else if (received_message == 'nissan') {
+        userInputs[user_id].brand == 'Nissan';
+        showNissan(sender_psid);
     } else {
         switch (received_message) {
             case "fill":
@@ -429,7 +444,6 @@ const handleMessage = (sender_psid, received_message) => {
         confirmBuyerAppointment(sender_psid);
     } else if (current_question == 'q7') {
         let appointment_ref = received_message.text;
-
         console.log('appointment_ref: ', appointment_ref);
         current_question = '';
         checkAppointment(sender_psid, appointment_ref);
@@ -570,6 +584,10 @@ const handlePostback = (sender_psid, received_postback) => {
             case "two":
                 showCars(sender_psid);
                 break;
+            case "my-appointments":
+                current_question = "q7";
+                buyerBotQuestions(current_question, sender_psid);
+                break;
             case "brands":
                 showBrands(sender_psid);
                 break;
@@ -645,30 +663,51 @@ function webviewTest(sender_psid) {
 }
 const checkAppointment = async (sender_psid, appointment_ref) => {
 
-    const appoinmentRef = db.collection('buyer_appointments').where("ref", "==", appointment_ref).limit(1);
-    const snapshot = await appoinmentRef.get();
+    const sellerAppoinmentRef = db.collection('seller_appointments').where("ref", "==", appointment_ref).limit(1);
+    const snapshot1 = await sellerAppoinmentRef.get();
+
+    const buyerAppoinmentRef = db.collection('buyer_appointments').where("ref", "==", appointment_ref).limit(1);
+    const snapshot2 = await buyerAppoinmentRef.get();
 
 
-    if (snapshot.empty) {
-        let response = { "text": "Incorrect ref number" };
+    if (snapshot1.empty) {
+        let response = { "text": "Incorrect booking ref number" };
+        callSend(sender_psid, response);
+    } else if (snapshot2.empty) {
+        let response = { "text": "Incorrect booking ref number" };
         callSend(sender_psid, response);
     } else {
-        let appointment = {}
+        let sellerAppointment = {};
+        let buyerAppointment = {};
 
-        snapshot.forEach(doc => {
-            appointment.ref = doc.data().ref;
-            appointment.status = doc.data().status;
-            appointment.name = doc.data().name;
-            // appointment.comment = doc.data().comment;
+        snapshot1.forEach(doc => {
+            sellerAppointment.ref = doc.data().ref;
+            sellerAppointment.status = doc.data().status;
+            sellerAppointment.name = doc.data().name;
+            sellerAppointment.comment = doc.data().comment;
         });
 
+        snapshot2.forEach(doc => {
+            buyerAppointment.ref = doc.data().ref;
+            buyerAppointment.status = doc.data().status;
+            buyerAppointment.name = doc.data().name;
+            buyerAppointment.comment = doc.data().comment;
+        });
 
-        let response1 = { "text": `Hello ${appointment.name}. Your appointment ${appointment.ref} is ${appointment.status}.` };
-        // let response2 = { "text": `Admin comment: ${appointment.comment}.` };
-        callSend(sender_psid, response1);
-        // .then(() => {
-        //     return callSend(sender_psid, response2)
-        // });
+        if (sellerAppointment.ref == appointment_ref) {
+            let response1 = { "text": `Hello ${sellerAppointment.name}. Your appointment ${sellerAppointment.ref} is ${sellerAppointment.status}.` };
+            let response2 = { "text": `Admin comment: ${sellerAppointment.comment}.` };
+            callSend(sender_psid, response1).then(() => {
+                return callSend(sender_psid, response2)
+            });
+        } else {
+            let response1 = { "text": `Hello ${buyerAppointment.name}. Your appointment ${buyerAppointment.ref} is ${buyerAppointment.status}.` };
+            let response2 = { "text": `Admin comment: ${buyerAppointment.comment}.` };
+            callSend(sender_psid, response1).then(() => {
+                return callSend(sender_psid, response2)
+            });
+        }
+      
     }
 
 }
@@ -929,6 +968,10 @@ const hiReply = (sender_psid) => {
                     "type": "postback",
                     "title": "Find me a car",
                     "payload": "two"
+                }, {
+                    "type": "postback",
+                    "title": "My Appointments",
+                    "payload": "my-appointments"
                 }]
             }
         }
@@ -972,7 +1015,7 @@ const showCars = (sender_psid) => {
 }
 const showBrands = (sender_psid) => {
     let response = {
-        "text": "Choose a type of vehicles you are looking for",
+        "text": "Choose a brand of vehicles you are looking for",
         "quick_replies": [{
             "content_type": "text",
             "title": "Toyota",
@@ -1001,6 +1044,7 @@ const showBrands = (sender_psid) => {
     };
     callSend(sender_psid, response);
 }
+// START TOYOTA
 const shwoToyota = (sender_psid) => {
     let response = {
         "attachment": {
@@ -1157,7 +1201,251 @@ const shwoToyota = (sender_psid) => {
     };
     callSend(sender_psid, response);
 }
+// END TOYOTA
 
+// START SUZUKI
+const shwoSuzuki = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "2012 Suzuki Swift",
+                    "image_url": "https://i.imgur.com/BBocmu5.jpg",
+                    "subtitle": "MMK : 170 lkh",
+                    "default_action": {
+                        "type": "web_url",
+                        "url": "https://www.facebook.com/101330348122237/posts/140844540837484/",
+                        "webview_height_ratio": "tall",
+                    },
+                    "buttons": [{
+                        "type": "web_url",
+                        "url": "https://www.facebook.com/101330348122237/posts/140844540837484/",
+                        "title": "More Information"
+                    }, {
+                        "type": "postback",
+                        "title": "Yes, I'm interested",
+                        "payload": "Model:2012 Suzuki Swift"
+                    }]
+                }]
+            }
+        }
+    };
+    callSend(sender_psid, response);
+}
+// END SUZIKI
+
+// START HONDA
+const shwoHonda = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                        "title": "2008 Honda Fit",
+                        "image_url": "https://i.imgur.com/pPU86Il.jpg",
+                        "subtitle": "MMK : 188 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140497514205520/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140497514205520/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:2008 Honda Fit"
+                        }]
+                    },
+                    {
+                        "title": "Honda Insight 2009",
+                        "image_url": "https://i.imgur.com/ykHdyGd.jpg",
+                        "subtitle": "MMK : 176 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140847464170525/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140847464170525/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Honda Insight 2009"
+                        }]
+                    }
+                ]
+            }
+        }
+    };
+    callSend(sender_psid, response);
+}
+// END HONDA
+
+// START MITSUBISHI
+const showMitsubishi = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                        "title": "2010 Misubishi Colt Plus",
+                        "image_url": "https://i.imgur.com/evfqDfU.jpg",
+                        "subtitle": "MMK : 155 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140530477535557/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140530477535557/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:2010 Misubishi Colt Plus"
+                        }]
+                    },
+                    {
+                        "title": "Misubishi Delica D2,1.3cc,2wd",
+                        "image_url": "https://i.imgur.com/gbKFTc8.jpg",
+                        "subtitle": "MMK : 167 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140612220860716/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140612220860716/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Misubishi Delica D2,1.3cc,2wd"
+                        }]
+                    },
+                    {
+                        "title": "Misubishi Minicab",
+                        "image_url": "https://i.imgur.com/RR4JwzK.jpgs",
+                        "subtitle": "MMK : 110 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140806450841293/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140806450841293/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Misubishi Minicab"
+                        }]
+                    }
+                ]
+            }
+        }
+    };
+    callSend(sender_psid, response);
+}
+// END MITISUBISHI
+
+// START DIHATSU
+const showDihatsu = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "2010 Dihatsu Cool",
+                    "image_url": "https://i.imgur.com/1BXIlSq.jpg",
+                    "subtitle": "MMK : 165 lkh",
+                    "default_action": {
+                        "type": "web_url",
+                        "url": "https://www.facebook.com/101330348122237/posts/140523607536244/",
+                        "webview_height_ratio": "tall",
+                    },
+                    "buttons": [{
+                        "type": "web_url",
+                        "url": "https://www.facebook.com/101330348122237/posts/140523607536244/",
+                        "title": "More Information"
+                    }, {
+                        "type": "postback",
+                        "title": "Yes, I'm interested",
+                        "payload": "Model:2010 Dihatsu Cool"
+                    }]
+                }]
+            }
+        }
+    };
+    callSend(sender_psid, response);
+}
+// END DIHATSU
+
+// START NISSAN
+const showNissan = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                        "title": "Nissan Cedric 2001",
+                        "image_url": "https://i.imgur.com/zz18si2.jpg",
+                        "subtitle": "MMK : 420 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140526790869259/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140526790869259/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Nissan Cedric 2001"
+                        }]
+                    },
+                    {
+                        "title": "Nissan Sunny 2009",
+                        "image_url": "https://i.imgur.com/vFNZvGg.jpg",
+                        "subtitle": "MMK : 230 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141087177479887/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141087177479887/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Nissan Sunny 2009"
+                        }]
+                    }
+                ]
+            }
+        }
+    };
+    callSend(sender_psid, response);
+}
+// END NISSAN
 const showQuickReplyOff = (sender_psid) => {
     let response = { "text": "You sent quick reply OFF" };
     callSend(sender_psid, response);

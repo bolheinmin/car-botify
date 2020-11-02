@@ -95,12 +95,12 @@
                                                     <%= buyerAppointment.status %>
                                                 </td>
                                                 <td>
-                                                    <a href="updatebappointment/<%= buyerAppointment.doc_id %>" class="btn btn-warning">
+                                                    <a href="updatebappointment/<%= buyerAppointment.doc_id %>" class="btn btn-warning" title="Edit">
                                                         <i class="icofont-ui-settings"></i>
                                                     </a>
                                                     <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">
                                                         <input type="hidden" name="id" value="">
-                                                        <button class="btn btn-outline-danger">
+                                                        <button class="btn btn-outline-danger" title="Delete">
                                                             <i class="icofont-close"></i>
                                                         </button>
                                                     </form>
@@ -166,12 +166,12 @@
                                                     <%= sellerAppointment.status %>
                                                 </td>
                                                 <td>
-                                                    <a href="updatesappointment/<%= sellerAppointment.doc_id %>" class="btn btn-warning">
+                                                    <a href="updatesappointment/<%= sellerAppointment.doc_id %>" class="btn btn-warning" title="Edit">
                                                         <i class="icofont-ui-settings"></i>
                                                     </a>
                                                     <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">
                                                         <input type="hidden" name="id" value="">
-                                                        <button class="btn btn-outline-danger">
+                                                        <button class="btn btn-outline-danger" title="Delete">
                                                             <i class="icofont-close"></i>
                                                         </button>
                                                     </form>
