@@ -208,7 +208,7 @@ app.get('/admin/updatesappointment/:doc_id', async function(req, res) {
         let data = doc.data();
         data.doc_id = doc.id;
         console.log('Document data:', data);
-        res.render('editbappointment.ejs', {
+        res.render('editsappointment.ejs', {
             data: data
         });
     }
