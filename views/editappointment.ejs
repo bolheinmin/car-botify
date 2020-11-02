@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'Messenger'));
 
-    const APP_ID = 544769076153407;    
+    const APP_ID = 647424299475528;    
     var senderID = "";
     
     window.extAsyncInit = function() {
@@ -52,7 +52,7 @@
   </div>
   <div class="form-group">
     <label for="brand">Type</label>
-    <input type="text" class="form-control" name="type" value="<%= data.type %>">
+    <input type="text" class="form-control" name="type" value="<%= data.model %>">
   </div>
   <div class="form-group">
     <label for="date">Date</label>
@@ -123,5 +123,164 @@
   </script>
 
   </body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PK Car Broker</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- Main Css -->
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- Iconfont -->
+    <link rel="stylesheet" href="/icon/icofont/icofont.min.css">
+</head>
+
+<body>
+    <div class="container-fluid my-5">
+        <h1 class="text-center">Admin Panel</h1>
+        <div class="app-title">
+            <div>
+                <h1> <i class="icofont-list"></i> Edit Appointment </h1>
+            </div>
+            <ul class="app-breadcrumb breadcrumb side">
+              <a class="btn btn-outline-primary" href="../../admin/appointments">
+                <i class="icofont-double-left"></i>
+              </a>
+            </ul>
+        </div>
+        <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <form id="form" method="post" action="../updateappointment">
+                        <!--Reference No start-->
+                        <div class="form-group row">
+                            <label for="ref_id" class="col-sm-2 col-form-label"> Reference No </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="ref_id" name="ref" value="<%= data.ref %>" readonly>
+                            </div>
+                        </div>
+                        <!--Reference No end-->
+                        <!--Name start-->
+                        <div class="form-group row">
+                            <label for="name_id" class="col-sm-2 col-form-label"> Name </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name_id" name="name" value="<%= data.name %>" readonly>
+                            </div>
+                        </div>
+                        <!--Name end-->
+                        <!--Phone start-->
+                        <div class="form-group row">
+                            <label for="phone_id" class="col-sm-2 col-form-label"> Phone </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="phone_id" name="phone" value="<%= data.phone %>" readonly>
+                            </div>
+                        </div>
+                        <!--Phone end-->
+                        <!--location start-->
+                        <div class="form-group row">
+                            <label for="location_id" class="col-sm-2 col-form-label"> Location </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="location_id" name="location" value="<%= data.location %>" readonly>
+                            </div>
+                        </div>
+                        <!--location end-->
+                        <!--date start-->
+                        <div class="form-group row">
+                            <label for="date_id" class="col-sm-2 col-form-label"> Date </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="date_id" name="date" value="<%= data.date %>" readonly>
+                            </div>
+                        </div>
+                        <!--date end-->
+                        <!--Time start-->
+                        <div class="form-group row">
+                            <label for="time_id" class="col-sm-2 col-form-label"> Time </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="time_id" name="time" value="<%= data.time %>" readonly>
+                            </div>
+                        </div>
+                        <!--Time end-->
+                        <!--brand start-->
+                        <div class="form-group row">
+                            <label for="brand_id" class="col-sm-2 col-form-label"> Brand </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="brand_id" name="brand" value="<%= data.brand %>" readonly>
+                            </div>
+                        </div>
+                        <!--brand end-->
+                        <!--model start-->
+                        <div class="form-group row">
+                            <label for="model_id" class="col-sm-2 col-form-label"> Model </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="model_id" name="model" value="<%= data.model %>" readonly>
+                            </div>
+                        </div>
+                        <!--model end-->
+                        <!--Message start-->
+                        <div class="form-group row">
+                            <label for="message_id" class="col-sm-2 col-form-label"> Message </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="message_id" name="message" value="<%= data.message %>" readonly>
+                            </div>
+                        </div>
+                        <!--Message end-->
+                        <!--Status start-->
+                        <div class="form-group row">
+                            <label for="status_id" class="col-sm-2 col-form-label"> Status </label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="status" id="status_id">
+                                    <option value="pending" <%if(data.status=="pending" ){%>
+                                        <%="selected"%>
+                                        <%}%>
+                                        >Pending</option>
+                                    <option value="processing" <%if(data.status=="processing" ){%>
+                                        <%="selected"%>
+                                        <%}%>
+                                        >Processing</option>
+                                    <option value="shipped" <%if(data.status=="shipped" ){%>
+                                        <%="selected"%>
+                                        <%}%>
+                                        >Shipped</option>
+                                    <option value="shipped" <%if(data.status=="completed" ){%>
+                                        <%="selected"%>
+                                        <%}%>
+                                        >Completed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--Status end-->
+                        <!--Comment start-->
+                        <div class="form-group row">
+                            <label for="comment" class="col-sm-2 col-form-label"> Comment </label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="comment" id="" cols="10" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <!--Comment end-->
+                        <input type="hidden"  name="doc_id" value="<%= data.doc_id %>">
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="icofont-save"></i>
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Scripts -->
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
 
 </html>

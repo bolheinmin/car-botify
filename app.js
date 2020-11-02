@@ -188,7 +188,7 @@ app.post('/admin/updateappointment', function(req, res) {
         name: req.body.name,
         phone: req.body.phone,
         brand: req.body.brand,
-        type: req.body.type,
+        model: req.body.model,
         location: req.body.location,
         date: req.body.date,
         time: req.body.time,
