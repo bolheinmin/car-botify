@@ -670,7 +670,7 @@ const checkAppointment = async (sender_psid, appointment_ref) => {
     const snapshot2 = await buyerAppoinmentRef.get();
 
 
-    if (snapshot1.empty) {
+    if (snapshot1.empty || snapshot2.empty) {
         let response = { "text": "Incorrect booking ref number" };
         callSend(sender_psid, response);
     } else {
@@ -922,11 +922,17 @@ const saveSellerAppointment = (arg, sender_psid) => {
         console.log('SAVED', success);
         let text = "Thank you. We have received your appointment." + "\u000A";
         text += " We wil call you to confirm soon" + "\u000A";
-        text += "Your booking reference number is:" + data.ref;
-        let response = {
+        text += "Your booking reference number is:";
+        let refNo = data.ref;
+        let response1 = {
             "text": text
         };
-        callSend(sender_psid, response);
+        let response2 = {
+            "text": refNo
+        }
+        callSend(sender_psid, response1).then(() => {
+            return callSend(sender_psid, response2);
+        });
     }).catch((err) => {
         console.log('Error', err);
     });
