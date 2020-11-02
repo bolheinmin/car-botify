@@ -162,7 +162,7 @@ app.get('/admin/appointments', async function(req, res) {
     });
     console.log('DATA:', buyerData);
     res.render('appointments.ejs', {
-        buyerData: buyerData
+        buyerData: buyerData,
         sellerData: sellerData
     });
 });
