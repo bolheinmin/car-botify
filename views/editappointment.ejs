@@ -160,7 +160,7 @@
                     <form id="form" method="post" action="../updateappointment">
                         <!--Reference No start-->
                         <div class="form-group row">
-                            <label for="ref_id" class="col-sm-2 col-form-label"> Reference No </label>
+                            <label for="ref_id" class="col-sm-2 col-form-label"> Ref No : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="ref_id" name="ref" value="<%= data.ref %>" readonly>
                             </div>
@@ -168,7 +168,7 @@
                         <!--Reference No end-->
                         <!--Name start-->
                         <div class="form-group row">
-                            <label for="name_id" class="col-sm-2 col-form-label"> Name </label>
+                            <label for="name_id" class="col-sm-2 col-form-label"> Name : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="name_id" name="name" value="<%= data.name %>" readonly>
                             </div>
@@ -176,7 +176,7 @@
                         <!--Name end-->
                         <!--Phone start-->
                         <div class="form-group row">
-                            <label for="phone_id" class="col-sm-2 col-form-label"> Phone </label>
+                            <label for="phone_id" class="col-sm-2 col-form-label"> Phone : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="phone_id" name="phone" value="<%= data.phone %>" readonly>
                             </div>
@@ -184,7 +184,7 @@
                         <!--Phone end-->
                         <!--location start-->
                         <div class="form-group row">
-                            <label for="location_id" class="col-sm-2 col-form-label"> Location </label>
+                            <label for="location_id" class="col-sm-2 col-form-label"> Location : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="location_id" name="location" value="<%= data.location %>" readonly>
                             </div>
@@ -192,7 +192,7 @@
                         <!--location end-->
                         <!--date start-->
                         <div class="form-group row">
-                            <label for="date_id" class="col-sm-2 col-form-label"> Date </label>
+                            <label for="date_id" class="col-sm-2 col-form-label"> Date : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="date_id" name="date" value="<%= data.date %>" readonly>
                             </div>
@@ -200,7 +200,7 @@
                         <!--date end-->
                         <!--Time start-->
                         <div class="form-group row">
-                            <label for="time_id" class="col-sm-2 col-form-label"> Time </label>
+                            <label for="time_id" class="col-sm-2 col-form-label"> Time : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="time_id" name="time" value="<%= data.time %>" readonly>
                             </div>
@@ -208,7 +208,7 @@
                         <!--Time end-->
                         <!--brand start-->
                         <div class="form-group row">
-                            <label for="brand_id" class="col-sm-2 col-form-label"> Brand </label>
+                            <label for="brand_id" class="col-sm-2 col-form-label"> Brand : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="brand_id" name="brand" value="<%= data.brand %>" readonly>
                             </div>
@@ -216,7 +216,7 @@
                         <!--brand end-->
                         <!--model start-->
                         <div class="form-group row">
-                            <label for="model_id" class="col-sm-2 col-form-label"> Model </label>
+                            <label for="model_id" class="col-sm-2 col-form-label"> Model : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="model_id" name="model" value="<%= data.model %>" readonly>
                             </div>
@@ -224,7 +224,7 @@
                         <!--model end-->
                         <!--Message start-->
                         <div class="form-group row">
-                            <label for="message_id" class="col-sm-2 col-form-label"> Message </label>
+                            <label for="message_id" class="col-sm-2 col-form-label"> Message : </label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="message_id" name="message" value="<%= data.message %>" readonly>
                             </div>
@@ -232,7 +232,7 @@
                         <!--Message end-->
                         <!--Status start-->
                         <div class="form-group row">
-                            <label for="status_id" class="col-sm-2 col-form-label"> Status </label>
+                            <label for="status_id" class="col-sm-2 col-form-label"> Status : </label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="status" id="status_id">
                                     <option value="pending" <%if(data.status=="pending" ){%>
@@ -253,7 +253,7 @@
                         <!--Status end-->
                         <!--Comment start-->
                         <div class="form-group row">
-                            <label for="comment" class="col-sm-2 col-form-label"> Comment </label>
+                            <label for="comment" class="col-sm-2 col-form-label"> Comment : </label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" name="comment" id="" cols="10" rows="3"></textarea>
                             </div>
@@ -261,7 +261,7 @@
                         <!--Comment end-->
                         <input type="hidden"  name="doc_id" value="<%= data.doc_id %>">
                         <div class="form-group row">
-                            <div class="col-sm-10">
+                            <div class="col-sm-10 ml-auto">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="icofont-save"></i>
                                     Save
