@@ -48,7 +48,7 @@
                                                 <th>Phone</th>
                                                 <th>Location</th>
                                                 <th>Brand</th>
-                                                <th>Type</th>
+                                                <th>Model</th>
                                                 <th>Date</th>
                                                 <th>Time</th>
                                                 <th>Message</th>
@@ -59,43 +59,43 @@
                                         </thead>
                                         <tbody>
                                             <% var i = 1; %>
-                                            <% data.forEach(function(appointment){ %>
+                                            <% buyerData.forEach(function(buyerAppointment){ %>
                                             <tr>
                                                 <td>
                                                     <%= i++ %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.name %>
+                                                    <%= buyerAppointment.name %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.phone %>
+                                                    <%= buyerAppointment.phone %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.location %>
+                                                    <%= buyerAppointment.location %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.brand %>
+                                                    <%= buyerAppointment.brand %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.type %>
+                                                    <%= buyerAppointment.model %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.date %>
+                                                    <%= buyerAppointment.date %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.time %>
+                                                    <%= buyerAppointment.time %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.message %>
+                                                    <%= buyerAppointment.message %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.ref %>
+                                                    <%= buyerAppointment.ref %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.status %>
+                                                    <%= buyerAppointment.status %>
                                                 </td>
                                                 <td>
-                                                    <a href="updateappointment/<%= appointment.doc_id %>" class="btn btn-warning">
+                                                    <a href="updateappointment/<%= buyerAppointment.doc_id %>" class="btn btn-warning">
                                                         <i class="icofont-ui-settings"></i>
                                                     </a>
                                                     <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">
@@ -123,7 +123,7 @@
                                                 <th>Phone</th>
                                                 <th>Location</th>
                                                 <th>Brand</th>
-                                                <th>Type</th>
+                                                <th>Model</th>
                                                 <th>Date</th>
                                                 <th>Time</th>
                                                 <th>Message</th>
@@ -134,43 +134,40 @@
                                         </thead>
                                         <tbody>
                                             <% var i = 1; %>
-                                            <% data.forEach(function(appointment){ %>
+                                            <% sellerData.forEach(function(sellerAppointment){ %>
                                             <tr>
                                                 <td>
                                                     <%= i++ %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.name %>
+                                                    <%= sellerAppointment.name %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.phone %>
+                                                    <%= sellerAppointment.phone %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.location %>
+                                                    <%= sellerAppointment.location %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.brand %>
+                                                    <%= sellerAppointment.vBrand %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.toyota %>
+                                                    <%= sellerAppointment.vModel %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.date %>
+                                                    <%= sellerAppointment.date %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.time %>
+                                                    <%= sellerAppointment.time %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.message %>
+                                                    <%= sellerAppointment.ref %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.ref %>
+                                                    <%= sellerAppointment.status %>
                                                 </td>
                                                 <td>
-                                                    <%= appointment.status %>
-                                                </td>
-                                                <td>
-                                                    <a href="updateappointment/<%= appointment.doc_id %>" class="btn btn-warning">
+                                                    <a href="updateappointment/<%= sellerAppointment.doc_id %>" class="btn btn-warning">
                                                         <i class="icofont-ui-settings"></i>
                                                     </a>
                                                     <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">

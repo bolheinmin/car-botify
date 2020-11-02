@@ -38,7 +38,7 @@ const buyer_bot_questions = {
     "q15": "Please enter a location"
 }
 
-const seller_bot_questions = {    
+const seller_bot_questions = {
     "que1": "Please enter a booking reference number",
     "que2": "Please enter Vehicle Year",
     "que3": "Please enter Vehicle Brand (Eg: Toyota, Honda etc..)",
@@ -134,22 +134,36 @@ app.post('/test', function(req, res) {
     callSend(sender_psid, response);
 });
 app.get('/admin/appointments', async function(req, res) {
-    const appointmentsRef = db.collection('buyer_appointments');
+    const buyerAppointmentsRef = db.collection('buyer_appointments');
+    const sellerAppointmentsRef = db.collection('seller_appointments');
     // const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1);
-    const snapshot = await appointmentsRef.get();
-    if (snapshot.empty) {
+    const snapshot1 = await buyerAppointmentsRef.get();
+    const snapshot2 = await sellerAppointmentsRef.get();
+    if (snapshot1.empty) {
         res.send('no data');
     }
-    let data = [];
-    snapshot.forEach(doc => {
-        let appointment = {};
-        appointment = doc.data();
-        appointment.doc_id = doc.id;
-        data.push(appointment);
+    if (snapshot2.empty) {
+        res.send('no data')
+    }
+    let buyerData = [];
+    let sellerData = [];
+    snapshot1.forEach(doc => {
+        let buyerAppointment = {};
+        buyerAppointment = doc.data();
+        buyerAppointment.doc_id = doc.id;
+        data.push(buyerAppointment);
     });
-    console.log('DATA:', data);
+
+    snapshot2.forEach(doc => {
+        let sellerAappointment = {};
+        sellerAappointment = doc.data();
+        sellerAappointment.doc_id = doc.id;
+        data.push(sellerAappointment);
+    });
+    console.log('DATA:', buyerData);
     res.render('appointments.ejs', {
-        data: data
+        buyerData: buyerData
+        sellerData: sellerData
     });
 });
 app.get('/admin/updateappointment/:doc_id', async function(req, res) {
@@ -775,7 +789,7 @@ const buyerBotQuestions = (current_question, sender_psid) => {
             "text": buyer_bot_questions.q7
         };
         callSend(sender_psid, response);
-    } 
+    }
 }
 const confirmSellerAppointment = (sender_psid) => {
     console.log('APPOINTMENT INFO', userInputs);
@@ -791,7 +805,7 @@ const confirmSellerAppointment = (sender_psid) => {
     summery += "name:" + userInputs[user_id].name + "\u000A";
     summery += "phone:" + userInputs[user_id].phone + "\u000A";
     summery += "location:" + userInputs[user_id].location + "\u000A";
-    
+
     let response1 = {
         "text": summery
     };
@@ -856,7 +870,7 @@ const saveSellerAppointment = (arg, sender_psid) => {
         callSend(sender_psid, response);
     }).catch((err) => {
         console.log('Error', err);
-    });    
+    });
 }
 
 const saveBuyerAppointment = (arg, sender_psid) => {
@@ -900,18 +914,16 @@ const hiReply = (sender_psid) => {
 }
 const fillInfo = (sender_psid) => {
     let response = {
-    "text" : "You need to fill vehicle information below", 
-     "quick_replies":[
-      {
-        "content_type":"text",
-        "title":"Fill vehicle info",
-        "payload":"fill"
-        
-      }
-    ]
+        "text": "You need to fill vehicle information below",
+        "quick_replies": [{
+            "content_type": "text",
+            "title": "Fill vehicle info",
+            "payload": "fill"
 
-  };
-  callSend(sender_psid, response);
+        }]
+
+    };
+    callSend(sender_psid, response);
 }
 
 const showCars = (sender_psid) => {
@@ -1123,9 +1135,9 @@ const shwoToyota = (sender_psid) => {
     callSend(sender_psid, response);
 }
 
-const showQuickReplyOff =(sender_psid) => {
-  let response = { "text": "You sent quick reply OFF" };
-  callSend(sender_psid, response);
+const showQuickReplyOff = (sender_psid) => {
+    let response = { "text": "You sent quick reply OFF" };
+    callSend(sender_psid, response);
 }
 
 const thankyouReply = (sender_psid, name, img_url) => {
