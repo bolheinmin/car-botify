@@ -673,9 +673,6 @@ const checkAppointment = async (sender_psid, appointment_ref) => {
     if (snapshot1.empty) {
         let response = { "text": "Incorrect booking ref number" };
         callSend(sender_psid, response);
-    } else if (snapshot2.empty) {
-        let response = { "text": "Incorrect booking ref number" };
-        callSend(sender_psid, response);
     } else {
         let sellerAppointment = {};
         let buyerAppointment = {};
