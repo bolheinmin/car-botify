@@ -154,7 +154,7 @@
             </ul>
         </div>
         <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 offset-md-3">
             <div class="tile">
                 <div class="tile-body">
                     <form id="form" method="post" action="../updateappointment">
@@ -239,18 +239,14 @@
                                         <%="selected"%>
                                         <%}%>
                                         >Pending</option>
-                                    <option value="processing" <%if(data.status=="processing" ){%>
+                                    <option value="confirmed" <%if(data.status=="confirmed" ){%>
                                         <%="selected"%>
                                         <%}%>
-                                        >Processing</option>
-                                    <option value="shipped" <%if(data.status=="shipped" ){%>
+                                        >Confirmed</option>
+                                    <option value="canceled" <%if(data.status=="canceled" ){%>
                                         <%="selected"%>
                                         <%}%>
-                                        >Shipped</option>
-                                    <option value="shipped" <%if(data.status=="completed" ){%>
-                                        <%="selected"%>
-                                        <%}%>
-                                        >Completed</option>
+                                        >Calceled</option>
                                 </select>
                             </div>
                         </div>
