@@ -113,7 +113,76 @@
                             </div>
                             <!-- End Appointment (Buyer) -->
                             <!-- Start Appointment (Seller) -->
-                        
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Phone</th>
+                                                <th>Location</th>
+                                                <th>Brand</th>
+                                                <th>Model</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Message</th>
+                                                <th>Reference</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% var i = 1; %>
+                                            <% sellerData.forEach(function(sellerAppointment){ %>
+                                            <tr>
+                                                <td>
+                                                    <%= i++ %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.name %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.phone %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.location %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.vBrand %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.vModel %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.date %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.time %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.ref %>
+                                                </td>
+                                                <td>
+                                                    <%= sellerAppointment.status %>
+                                                </td>
+                                                <td>
+                                                    <a href="updateappointment/<%= sellerAppointment.doc_id %>" class="btn btn-warning">
+                                                        <i class="icofont-ui-settings"></i>
+                                                    </a>
+                                                    <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">
+                                                        <input type="hidden" name="id" value="">
+                                                        <button class="btn btn-outline-danger">
+                                                            <i class="icofont-close"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             <!-- End Appointment (Seller) -->
                         </div>
                     </div>

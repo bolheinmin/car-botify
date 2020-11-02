@@ -135,18 +135,18 @@ app.post('/test', function(req, res) {
 });
 app.get('/admin/appointments', async function(req, res) {
     const buyerAppointmentsRef = db.collection('buyer_appointments');
-    // const sellerAppointmentsRef = db.collection('seller_appointments');
+    const sellerAppointmentsRef = db.collection('seller_appointments');
     // const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1);
     const snapshot1 = await buyerAppointmentsRef.get();
-    // const snapshot2 = await sellerAppointmentsRef.get();
+    const snapshot2 = await sellerAppointmentsRef.get();
     if (snapshot1.empty) {
         res.send('no data');
     }
-    // if (snapshot2.empty) {
-    //     res.send('no data')
-    // }
+    if (snapshot2.empty) {
+        res.send('no data')
+    }
     let buyerData = [];
-    // let sellerData = [];
+    let sellerData = [];
     snapshot1.forEach(doc => {
         let buyerAppointment = {};
         buyerAppointment = doc.data();
@@ -154,16 +154,16 @@ app.get('/admin/appointments', async function(req, res) {
         buyerData.push(buyerAppointment);
     });
 
-    // snapshot2.forEach(doc => {
-    //     let sellerAappointment = {};
-    //     sellerAappointment = doc.data();
-    //     sellerAappointment.doc_id = doc.id;
-    //     data.push(sellerAappointment);
-    // });
+    snapshot2.forEach(doc => {
+        let sellerAappointment = {};
+        sellerAappointment = doc.data();
+        sellerAappointment.doc_id = doc.id;
+        sellerData.push(sellerAappointment);
+    });
     console.log('DATA:', buyerData);
     res.render('appointments.ejs', {
         buyerData: buyerData,
-        // sellerData: sellerData
+        sellerData: sellerData
     });
 });
 app.get('/admin/updateappointment/:doc_id', async function(req, res) {
