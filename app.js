@@ -331,7 +331,7 @@ function handleQuickReply(sender_psid, received_message) {
     } else {
         switch (received_message) {
             case "fill":
-                current_question = 'q8';
+                current_question = 'q2';
                 sellerBotQuestions(current_question, sender_psid);
                 break;
             case "on":
