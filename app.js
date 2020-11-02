@@ -39,19 +39,19 @@ const buyer_bot_questions = {
 }
 
 const seller_bot_questions = {    
-    "q1": "Please enter a booking reference number",
-    "q2": "Please enter Vehicle Year",
-    "q3": "Please enter Vehicle Brand (Eg: Toyota, Honda etc..)",
-    "q4": "Please enter Vehicle Model (Eg: Vehical Name)",
-    "q5": "Please enter Vehicle Kilo (Eg: May be 0 Kilo to 200000 Kilo)",
-    "q6": "Vehicle Condition (Eg: Good or Bad)",
-    "q7": "Please fill Vehicle Description",
-    "q8": "How much do you expect this car to cost?",
-    "q9": "Which day do you want to meet? (dd-mm-yyyy)",
-    "q10": "Choose a time. (PS :You can viewd within 9:00 to 17:00.) (hh:mm)",
-    "q11": "Please enter a full name",
-    "q12": "Would you like to leave a phone number?",
-    "q13": "Where do you want to meet? PS : Customers are most meet at Tea Shop, Car Market Place, Restaurants and so on.",
+    "que1": "Please enter a booking reference number",
+    "que2": "Please enter Vehicle Year",
+    "que3": "Please enter Vehicle Brand (Eg: Toyota, Honda etc..)",
+    "que4": "Please enter Vehicle Model (Eg: Vehical Name)",
+    "que5": "Please enter Vehicle Kilo (Eg: May be 0 Kilo to 200000 Kilo)",
+    "que6": "Vehicle Condition (Eg: Good or Bad)",
+    "que7": "Please fill Vehicle Description",
+    "que8": "How much do you expect this car to cost?",
+    "que9": "Which day do you want to meet? (dd-mm-yyyy)",
+    "que10": "Choose a time. (PS :You can viewd within 9:00 to 17:00.) (hh:mm)",
+    "que11": "Please enter a full name",
+    "que12": "Would you like to leave a phone number?",
+    "que13": "Where do you want to meet? PS : Customers are most meet at Tea Shop, Car Market Place, Restaurants and so on.",
 }
 
 let current_question = '';
@@ -331,7 +331,7 @@ function handleQuickReply(sender_psid, received_message) {
     } else {
         switch (received_message) {
             case "fill":
-                current_question = 'q2';
+                current_question = 'que2';
                 sellerBotQuestions(current_question, sender_psid);
                 break;
             case "on":
@@ -396,62 +396,62 @@ const handleMessage = (sender_psid, received_message) => {
         console.log('appointment_ref: ', appointment_ref);
         current_question = '';
         checkAppointment(sender_psid, appointment_ref);
-    } else if (current_question == 'q2') {
+    } else if (current_question == 'que2') {
         console.log('Vehicle Year ENTERED', received_message.text);
         userInputs[user_id].vYear = received_message.text;
-        current_question = 'q3';
+        current_question = 'que3';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q3') {
+    } else if (current_question == 'que3') {
         console.log('Vehicle Brand ENTERED', received_message.text);
         userInputs[user_id].vBrand = received_message.text;
-        current_question = 'q4';
+        current_question = 'que4';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q4') {
+    } else if (current_question == 'que4') {
         console.log('Vehicle Model ENTERED', received_message.text);
         userInputs[user_id].vModel = received_message.text;
-        current_question = 'q5';
+        current_question = 'que5';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q5') {
+    } else if (current_question == 'que5') {
         console.log('Vehicle Kilo ENTERED', received_message.text);
         userInputs[user_id].vKilo = received_message.text;
-        current_question = 'q6';
+        current_question = 'que6';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q6') {
+    } else if (current_question == 'que6') {
         console.log('Vehicle Condition  ENTERED', received_message.text);
         userInputs[user_id].vCondition = received_message.text;
-        current_question = 'q7';
+        current_question = 'que7';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q7') {
+    } else if (current_question == 'que7') {
         console.log('Vehicle Description  ENTERED', received_message.text);
         userInputs[user_id].vDescription = received_message.text;
-        current_question = 'q8';
+        current_question = 'que8';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q8') {
+    } else if (current_question == 'que8') {
         console.log('Vehicle Cost ENTERED', received_message.text);
         userInputs[user_id].vCost = received_message.text;
-        current_question = 'q9';
+        current_question = 'que9';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q9') {
+    } else if (current_question == 'que9') {
         console.log('DATE ENTERED', received_message.text);
         userInputs[user_id].date = received_message.text;
-        current_question = 'q10';
+        current_question = 'que10';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q10') {
+    } else if (current_question == 'que10') {
         console.log('TIME ENTERED', received_message.text);
         userInputs[user_id].time = received_message.text;
-        current_question = 'q11';
+        current_question = 'que11';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q11') {
+    } else if (current_question == 'que11') {
         console.log('NAME ENTERED', received_message.text);
         userInputs[user_id].name = received_message.text;
-        current_question = 'q12';
+        current_question = 'que12';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q12') {
+    } else if (current_question == 'que12') {
         console.log('PHONE ENTERED', received_message.text);
         userInputs[user_id].phone = received_message.text;
-        current_question = 'q13';
+        current_question = 'que13';
         sellerBotQuestions(current_question, sender_psid);
-    } else if (current_question == 'q13') {
+    } else if (current_question == 'que13') {
         console.log('Location ENTERED', received_message.text);
         userInputs[user_id].location = received_message.text;
         current_question = '';
@@ -672,69 +672,69 @@ const showPackage = (sender_psid) => {
     callSend(sender_psid, response);
 }
 const sellerBotQuestions = (current_question, sender_psid) => {
-    if (current_question == 'q1') {
+    if (current_question == 'que1') {
         let response = {
-            "text": seller_bot_questions.q1
+            "text": seller_bot_questions.que1
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q2') {
+    } else if (current_question == 'que2') {
         let response = {
-            "text": seller_bot_questions.q2
+            "text": seller_bot_questions.que2
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q3') {
+    } else if (current_question == 'que3') {
         let response = {
-            "text": seller_bot_questions.q3
+            "text": seller_bot_questions.que3
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q4') {
+    } else if (current_question == 'que4') {
         let response = {
-            "text": seller_bot_questions.q4
+            "text": seller_bot_questions.que4
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q5') {
+    } else if (current_question == 'que5') {
         let response = {
-            "text": seller_bot_questions.q5
+            "text": seller_bot_questions.que5
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q6') {
+    } else if (current_question == 'que6') {
         let response = {
-            "text": seller_bot_questions.q6
+            "text": seller_bot_questions.que6
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q7') {
+    } else if (current_question == 'que7') {
         let response = {
-            "text": seller_bot_questions.q7
+            "text": seller_bot_questions.que7
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q8') {
+    } else if (current_question == 'que8') {
         let response = {
-            "text": seller_bot_questions.q8
+            "text": seller_bot_questions.que8
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q9') {
+    } else if (current_question == 'que9') {
         let response = {
-            "text": seller_bot_questions.q9
+            "text": seller_bot_questions.que9
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q10') {
+    } else if (current_question == 'que10') {
         let response = {
-            "text": seller_bot_questions.q10
+            "text": seller_bot_questions.que10
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q11') {
+    } else if (current_question == 'que11') {
         let response = {
-            "text": seller_bot_questions.q11
+            "text": seller_bot_questions.que11
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q12') {
+    } else if (current_question == 'que12') {
         let response = {
-            "text": seller_bot_questions.q12
+            "text": seller_bot_questions.que12
         };
         callSend(sender_psid, response);
-    } else if (current_question == 'q13') {
+    } else if (current_question == 'que13') {
         let response = {
-            "text": seller_bot_questions.q13
+            "text": seller_bot_questions.que13
         };
         callSend(sender_psid, response);
     }
