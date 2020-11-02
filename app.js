@@ -361,8 +361,8 @@ Function to Handle when user send quick reply message
 function handleQuickReply(sender_psid, received_message) {
     console.log('QUICK REPLY', received_message);
     received_message = received_message.toLowerCase();
-    if (received_message.startsWith("brand:")) {
-        let brand = received_message.slice(6);
+    if (received_message == 'toyota') {
+        let brand = received_message;
         userInputs[user_id].brand = brand;
         shwoToyota(sender_psid);
     } else {
@@ -555,8 +555,8 @@ Function to handle when user click button
 const handlePostback = (sender_psid, received_postback) => {
     let payload = received_postback.payload;
     console.log('BUTTON PAYLOAD', payload);
-    if (payload.startsWith("Type:")) {
-        let model_name = payload.slice(5);
+    if (payload.startsWith("Model:")) {
+        let model_name = payload.slice(6);
         console.log('SELECTED PACKAGE IS: ', model_name);
         userInputs[user_id].model = model_name;
         console.log('TEST', userInputs);
@@ -852,7 +852,7 @@ const confirmSellerAppointment = (sender_psid) => {
 const confirmBuyerAppointment = (sender_psid) => {
     console.log('APPOINTMENT INFO', userInputs);
     let summery = "brand:" + userInputs[user_id].brand + "\u000A";
-    summery += "type:" + userInputs[user_id].model + "\u000A";
+    summery += "model:" + userInputs[user_id].model + "\u000A";
     summery += "date:" + userInputs[user_id].date + "\u000A";
     summery += "time:" + userInputs[user_id].time + "\u000A";
     summery += "name:" + userInputs[user_id].name + "\u000A";
@@ -976,27 +976,27 @@ const showBrands = (sender_psid) => {
         "quick_replies": [{
             "content_type": "text",
             "title": "Toyota",
-            "payload": "brand:Toyota",
+            "payload": "toyota",
         }, {
             "content_type": "text",
             "title": "Suzuki",
-            "payload": "brand:Suzuki",
+            "payload": "suzuki",
         }, {
             "content_type": "text",
             "title": "Honda",
-            "payload": "brand:Honda",
+            "payload": "honda",
         }, {
             "content_type": "text",
             "title": "Mitsubishi",
-            "payload": "brand:Mitsubishi",
+            "payload": "mitsubishi",
         }, {
             "content_type": "text",
             "title": "Dihatsu",
-            "payload": "brand:Dihatsu",
+            "payload": "dihatsu",
         }, {
             "content_type": "text",
             "title": "Nissan",
-            "payload": "brand:Nissan",
+            "payload": "nissan",
         }]
     };
     callSend(sender_psid, response);
@@ -1023,7 +1023,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Type:Toyota Mark 2,2000model,2.0cc, Regalia",
+                        "payload": "Model:Toyota Mark 2,2000model,2.0cc, Regalia",
                     }]
                 }, {
                     "title": "Toyota Brevis 2001,3.0cc",
@@ -1041,7 +1041,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Type:Toyota Brevis 2001,3.0cc",
+                        "payload": "Model:Toyota Brevis 2001,3.0cc",
                     }]
                 }, {
                     "title": "Toyota Belta 2009",
@@ -1059,7 +1059,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Type:Toyota Belta 2009",
+                        "payload": "Model:Toyota Belta 2009",
                     }]
                 }, {
                     "title": "2007 Toyota Ractics",
@@ -1077,7 +1077,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Type:2007 Toyota Ractics",
+                        "payload": "Model:2007 Toyota Ractics",
                     }]
                 }, {
                     "title": "Toyota Hilux surf 1999 SSR G",
@@ -1095,7 +1095,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Type:Toyota Hilux surf 1999 SSR G",
+                        "payload": "Model:Toyota Hilux surf 1999 SSR G",
                     }]
                 }, {
                     "title": "Toyota Parado 1997,TX package",
@@ -1113,7 +1113,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Type:Toyota Parado 1997,TX package",
+                        "payload": "Model:Toyota Parado 1997,TX package",
                     }]
                 }, {
                     "title": "2004 late Toyota Hilux Surf",
@@ -1131,7 +1131,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Type:2004 late Toyota Hilux Surf",
+                        "payload": "Model:2004 late Toyota Hilux Surf",
                     }]
                 }, {
                     "title": "Toyota Harrier 1999 G Package",
@@ -1149,7 +1149,7 @@ const shwoToyota = (sender_psid) => {
                     }, {
                         "type": "postback",
                         "title": "Yes, I'm interested",
-                        "payload": "Type:Toyota Harrier 1999 G Package",
+                        "payload": "Model:Toyota Harrier 1999 G Package",
                     }]
                 }]
             }
