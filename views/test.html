@@ -16,7 +16,6 @@
 <body>
     <div class="container-fluid my-5">
         <h1 class="text-center">Admin Panel</h1>
-        <!--         <div class="col-md-12 my-5"> -->
         <div class="app-title">
             <div>
                 <h1>
@@ -31,17 +30,14 @@
                     <div class="tile-body">
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="appointment-tab" data-toggle="pill" href="#appointment" role="tab" aria-controls="appointment" aria-selected="true">Appointments</a>
+                                <a class="nav-link active" id="appointment-tab" data-toggle="pill" href="#appointment" role="tab" aria-controls="appointment" aria-selected="true">Appointments(Buyer)</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Appointments(Seller)</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
-                            <!-- Start Appointment -->
+                            <!-- Start Appointment (Buyer) -->
                             <div class="tab-pane fade show active" id="appointment" role="tabpanel" aria-labelledby="appointment-tab">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-bordered" id="sampleTable">
@@ -53,7 +49,6 @@
                                                 <th>Location</th>
                                                 <th>Brand</th>
                                                 <th>Type</th>
-                                                <!-- <th>Visit</th> -->
                                                 <th>Date</th>
                                                 <th>Time</th>
                                                 <th>Message</th>
@@ -63,19 +58,42 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <% var i = 1; %>
+                                            <% data.forEach(function(appointment){ %>
                                             <tr>
-                                                <td>1</td>
-                                                <td>heinmin</td>
-                                                <td>0978456123</td>
-                                                <td>Tea Shop</td>
-                                                <td>Toyota</td>
-                                                <td>Toyota Belta 2009</td>
-                                                <!-- <td>first time</td> -->
-                                                <td>30-10-2020</td>
-                                                <td>12:00</td>
-                                                <td>i want to buy a car</td>
-                                                <td>JOT861</td>
-                                                <td>pending</td>
+                                                <td>
+                                                    <%= i++ %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.name %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.phone %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.location %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.brand %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.type %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.date %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.time %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.message %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.ref %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.status %>
+                                                </td>
                                                 <td>
                                                     <a href="updateappointment/<%= appointment.doc_id %>" class="btn btn-warning">
                                                         <i class="icofont-ui-settings"></i>
@@ -88,16 +106,89 @@
                                                     </form>
                                                 </td>
                                             </tr>
+                                            <% }); %>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <!-- End Appointment -->
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-                            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+                            <!-- End Appointment (Buyer) -->
+                            <!-- Start Appointment (Seller) -->
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Phone</th>
+                                                <th>Location</th>
+                                                <th>Brand</th>
+                                                <th>Type</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Message</th>
+                                                <th>Reference</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% var i = 1; %>
+                                            <% data.forEach(function(appointment){ %>
+                                            <tr>
+                                                <td>
+                                                    <%= i++ %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.name %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.phone %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.location %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.brand %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.toyota %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.date %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.time %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.message %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.ref %>
+                                                </td>
+                                                <td>
+                                                    <%= appointment.status %>
+                                                </td>
+                                                <td>
+                                                    <a href="updateappointment/<%= appointment.doc_id %>" class="btn btn-warning">
+                                                        <i class="icofont-ui-settings"></i>
+                                                    </a>
+                                                    <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">
+                                                        <input type="hidden" name="id" value="">
+                                                        <button class="btn btn-outline-danger">
+                                                            <i class="icofont-close"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- End Appointment (Seller) -->
                         </div>
                     </div>
-                    <!-- </div> -->
                 </div>
             </div>
         </div>

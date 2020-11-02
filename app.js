@@ -27,7 +27,15 @@ const bot_questions = {
     "q4": "Would you like to leave a phone number",
     "q5": "Where do you want to look the car? PS : Customers are most viewd at Tea Shop, Car Market Place, Restaurants and so on.",
     "q6": "Please leave a message",
-    "q7": "Please enter reference no"
+    "q7": "Please enter booking reference number",
+    "q8": "Please enter Vehicle Year",
+    "q9": "Please enter Vehicle Brand (Eg: Toyota, Honda etc..)",
+    "q10": "Please enter Vehicle Model (Eg: Vehical Name)",
+    "q11": "Please enter Vehicle Kilo (Eg: May be 0 Kilo to 200000 Kilo)",
+    "q12": "Vehicle Condition (Eg: Good or Bad)",
+    "q13": "Please fill Vehicle Description",
+    "q14": "How much do you expect this car to cost?",
+    "q15": "Please enter a location"
 }
 let current_question = '';
 let user_id = '';
@@ -109,7 +117,7 @@ app.post('/test', function(req, res) {
     callSend(sender_psid, response);
 });
 app.get('/admin/appointments', async function(req, res) {
-    const appointmentsRef = db.collection('appointments');
+    const appointmentsRef = db.collection('buyer_appointments');
     // const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1);
     const snapshot = await appointmentsRef.get();
     if (snapshot.empty) {
@@ -129,7 +137,7 @@ app.get('/admin/appointments', async function(req, res) {
 });
 app.get('/admin/updateappointment/:doc_id', async function(req, res) {
     let doc_id = req.params.doc_id;
-    const appoinmentRef = db.collection('appointments').doc(doc_id);
+    const appoinmentRef = db.collection('buyer_appointments').doc(doc_id);
     const doc = await appoinmentRef.get();
     if (!doc.exists) {
         console.log('No such document!');
@@ -159,7 +167,7 @@ app.post('/admin/updateappointment', function(req, res) {
         ref: req.body.ref,
         comment: req.body.comment
     }
-    db.collection('appointments').doc(req.body.doc_id).update(data).then(() => {
+    db.collection('buyer_appointments').doc(req.body.doc_id).update(data).then(() => {
         res.redirect('/admin/appointments');
     }).catch((err) => console.log('ERROR:', error));
 });
@@ -305,14 +313,21 @@ function handleQuickReply(sender_psid, received_message) {
         shwoToyota(sender_psid);
     } else {
         switch (received_message) {
+            case "fill":
+                current_question = 'q8';
+                sellerBotQuestions(current_question, sender_psid);
+                break;
             case "on":
                 showQuickReplyOn(sender_psid);
                 break;
             case "off":
                 showQuickReplyOff(sender_psid);
                 break;
-            case "confirm-appointment":
-                saveAppointment(userInputs[user_id], sender_psid);
+            case "confirm-seller-appointment":
+                saveSellerAppointment(userInputs[user_id], sender_psid);
+                break;
+            case "confirm-buyer-appointment":
+                saveBuyerAppointment(userInputs[user_id], sender_psid);
                 break;
             default:
                 defaultReply(sender_psid);
@@ -332,45 +347,105 @@ const handleMessage = (sender_psid, received_message) => {
         console.log('DATE ENTERED', received_message.text);
         userInputs[user_id].date = received_message.text;
         current_question = 'q2';
-        botQuestions(current_question, sender_psid);
+        buyerBotQuestions(current_question, sender_psid);
     } else if (current_question == 'q2') {
         console.log('TIME ENTERED', received_message.text);
         userInputs[user_id].time = received_message.text;
         current_question = 'q3';
-        botQuestions(current_question, sender_psid);
+        buyerBotQuestions(current_question, sender_psid);
     } else if (current_question == 'q3') {
         console.log('FULL NAME ENTERED', received_message.text);
         userInputs[user_id].name = received_message.text;
         current_question = 'q4';
-        botQuestions(current_question, sender_psid);
+        buyerBotQuestions(current_question, sender_psid);
     } else if (current_question == 'q4') {
         console.log('PHONE NUMBER ENTERED', received_message.text);
         userInputs[user_id].phone = received_message.text;
         current_question = 'q5';
-        botQuestions(current_question, sender_psid);
+        buyerBotQuestions(current_question, sender_psid);
     } else if (current_question == 'q5') {
         console.log('location ENTERED', received_message.text);
         userInputs[user_id].location = received_message.text;
         current_question = 'q6';
-        botQuestions(current_question, sender_psid);
+        buyerBotQuestions(current_question, sender_psid);
     } else if (current_question == 'q6') {
         console.log('MESSAGE ENTERED', received_message.text);
         userInputs[user_id].message = received_message.text;
         current_question = '';
-        confirmAppointment(sender_psid);
+        confirmBuyerAppointment(sender_psid);
     } else if (current_question == 'q7') {
         let appointment_ref = received_message.text;
 
         console.log('appointment_ref: ', appointment_ref);
         current_question = '';
         checkAppointment(sender_psid, appointment_ref);
+    } else if (current_question == 'q8') {
+        console.log('Vehicle Year ENTERED', received_message.text);
+        userInputs[user_id].vYear = received_message.text;
+        current_question = 'q9';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q9') {
+        console.log('Vehicle Brand ENTERED', received_message.text);
+        userInputs[user_id].vBrand = received_message.text;
+        current_question = 'q10';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q10') {
+        console.log('Vehicle Model ENTERED', received_message.text);
+        userInputs[user_id].vModel = received_message.text;
+        current_question = 'q11';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q11') {
+        console.log('Vehicle Kilo ENTERED', received_message.text);
+        userInputs[user_id].vKilo = received_message.text;
+        current_question = 'q12';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q12') {
+        console.log('Vehicle Condition  ENTERED', received_message.text);
+        userInputs[user_id].vCondition = received_message.text;
+        current_question = 'q13';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q13') {
+        console.log('Vehicle Description  ENTERED', received_message.text);
+        userInputs[user_id].vDescription = received_message.text;
+        current_question = 'q14';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q14') {
+        console.log('Vehicle Cost ENTERED', received_message.text);
+        userInputs[user_id].vCost = received_message.text;
+        current_question = 'q1';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q1') {
+        console.log('DATE ENTERED', received_message.text);
+        userInputs[user_id].date = received_message.text;
+        current_question = 'q2';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q2') {
+        console.log('TIME ENTERED', received_message.text);
+        userInputs[user_id].time = received_message.text;
+        current_question = 'q3';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q3') {
+        console.log('NAME ENTERED', received_message.text);
+        userInputs[user_id].name = received_message.text;
+        current_question = 'q4';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q4') {
+        console.log('PHONE ENTERED', received_message.text);
+        userInputs[user_id].phone = received_message.text;
+        current_question = 'q15';
+        sellerBotQuestions(current_question, sender_psid);
+    } else if (current_question == 'q15') {
+        console.log('Location ENTERED', received_message.text);
+        userInputs[user_id].vCost = received_message.text;
+        current_question = '';
+        confirmSellerAppointment(sender_psid);
     } else {
         let user_message = received_message.text;
         user_message = user_message.toLowerCase();
         switch (user_message) {
             case "check":
                 current_question = "q7";
-                botQuestions(current_question, sender_psid);
+                buyerBotQuestions(current_question, sender_psid);
                 break;
             case "hi":
                 hiReply(sender_psid);
@@ -427,14 +502,17 @@ const handlePostback = (sender_psid, received_postback) => {
     let payload = received_postback.payload;
     console.log('BUTTON PAYLOAD', payload);
     if (payload.startsWith("Type:")) {
-        let type_name = payload.slice(5);
-        console.log('SELECTED PACKAGE IS: ', type_name);
-        userInputs[user_id].type = type_name;
+        let model_name = payload.slice(5);
+        console.log('SELECTED PACKAGE IS: ', model_name);
+        userInputs[user_id].model = model_name;
         console.log('TEST', userInputs);
         current_question = 'q1';
-        botQuestions(current_question, sender_psid);
+        buyerBotQuestions(current_question, sender_psid);
     } else {
         switch (payload) {
+            case "one":
+                fillInfo(sender_psid);
+                break;
             case "two":
                 showCars(sender_psid);
                 break;
@@ -513,7 +591,7 @@ function webviewTest(sender_psid) {
 }
 const checkAppointment = async (sender_psid, appointment_ref) => {
 
-    const appoinmentRef = db.collection('appointments').where("ref", "==", appointment_ref).limit(1);
+    const appoinmentRef = db.collection('buyer_appointments').where("ref", "==", appointment_ref).limit(1);
     const snapshot = await appoinmentRef.get();
 
 
@@ -576,7 +654,70 @@ const showPackage = (sender_psid) => {
     }
     callSend(sender_psid, response);
 }
-const botQuestions = (current_question, sender_psid) => {
+const sellerBotQuestions = (current_question, sender_psid) => {
+    if (current_question == 'q1') {
+        let response = {
+            "text": bot_questions.q1
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q2') {
+        let response = {
+            "text": bot_questions.q2
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q3') {
+        let response = {
+            "text": bot_questions.q3
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q4') {
+        let response = {
+            "text": bot_questions.q4
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q8') {
+        let response = {
+            "text": bot_questions.q8
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q9') {
+        let response = {
+            "text": bot_questions.q9
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q10') {
+        let response = {
+            "text": bot_questions.q10
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q11') {
+        let response = {
+            "text": bot_questions.q11
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q12') {
+        let response = {
+            "text": bot_questions.q12
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q13') {
+        let response = {
+            "text": bot_questions.q13
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q14') {
+        let response = {
+            "text": bot_questions.q14
+        };
+        callSend(sender_psid, response);
+    } else if (current_question == 'q15') {
+        let response = {
+            "text": bot_questions.q15
+        };
+        callSend(sender_psid, response);
+    }
+}
+const buyerBotQuestions = (current_question, sender_psid) => {
     if (current_question == 'q1') {
         let response = {
             "text": bot_questions.q1
@@ -612,12 +753,47 @@ const botQuestions = (current_question, sender_psid) => {
             "text": bot_questions.q7
         };
         callSend(sender_psid, response);
-    }
+    } 
 }
-const confirmAppointment = (sender_psid) => {
+const confirmSellerAppointment = (sender_psid) => {
+    console.log('APPOINTMENT INFO', userInputs);
+    let summery = "Vehicle year:" + userInputs[user_id].vYear + "\u000A";
+    summery += "Vehicle brand:" + userInputs[user_id].vBrand + "\u000A";
+    summery += "Vehicle model:" + userInputs[user_id].vModel + "\u000A";
+    summery += "Vehicle kilo:" + userInputs[user_id].vKilo + "\u000A";
+    summery += "Vehicle Condition:" + userInputs[user_id].vCondition + "\u000A";
+    summery += "Vehicle Description:" + userInputs[user_id].vDescription + "\u000A";
+    summery += "Vehicle Cost:" + userInputs[user_id].vCost + "\u000A";
+    summery += "date:" + userInputs[user_id].date + "\u000A";
+    summery += "time:" + userInputs[user_id].time + "\u000A";
+    summery += "name:" + userInputs[user_id].name + "\u000A";
+    summery += "phone:" + userInputs[user_id].phone + "\u000A";
+    summery += "location:" + userInputs[user_id].location + "\u000A";
+    
+    let response1 = {
+        "text": summery
+    };
+    let response2 = {
+        "text": "Select your reply",
+        "quick_replies": [{
+            "content_type": "text",
+            "title": "Confirm",
+            "payload": "confirm-seller-appointment",
+        }, {
+            "content_type": "text",
+            "title": "Cancel",
+            "payload": "off",
+        }]
+    };
+    callSend(sender_psid, response1).then(() => {
+        return callSend(sender_psid, response2);
+    });
+}
+
+const confirmBuyerAppointment = (sender_psid) => {
     console.log('APPOINTMENT INFO', userInputs);
     let summery = "brand:" + userInputs[user_id].brand + "\u000A";
-    summery += "type:" + userInputs[user_id].type + "\u000A";
+    summery += "type:" + userInputs[user_id].model + "\u000A";
     summery += "date:" + userInputs[user_id].date + "\u000A";
     summery += "time:" + userInputs[user_id].time + "\u000A";
     summery += "name:" + userInputs[user_id].name + "\u000A";
@@ -632,7 +808,7 @@ const confirmAppointment = (sender_psid) => {
         "quick_replies": [{
             "content_type": "text",
             "title": "Confirm",
-            "payload": "confirm-appointment",
+            "payload": "confirm-buyer-appointment",
         }, {
             "content_type": "text",
             "title": "Cancel",
@@ -643,11 +819,29 @@ const confirmAppointment = (sender_psid) => {
         return callSend(sender_psid, response2);
     });
 }
-const saveAppointment = (arg, sender_psid) => {
+const saveSellerAppointment = (arg, sender_psid) => {
     let data = arg;
     data.ref = generateRandom(6);
     data.status = "pending";
-    db.collection('appointments').add(data).then((success) => {
+    db.collection('seller_appointments').add(data).then((success) => {
+        console.log('SAVED', success);
+        let text = "Thank you. We have received your appointment." + "\u000A";
+        text += " We wil call you to confirm soon" + "\u000A";
+        text += "Your booking reference number is:" + data.ref;
+        let response = {
+            "text": text
+        };
+        callSend(sender_psid, response);
+    }).catch((err) => {
+        console.log('Error', err);
+    });    
+}
+
+const saveBuyerAppointment = (arg, sender_psid) => {
+    let data = arg;
+    data.ref = generateRandom(6);
+    data.status = "pending";
+    db.collection('buyer_appointments').add(data).then((success) => {
         console.log('SAVED', success);
         let text = "Thank you. We have received your appointment." + "\u000A";
         text += " We wil call you to confirm soon" + "\u000A";
@@ -682,13 +876,29 @@ const hiReply = (sender_psid) => {
     }
     callSend(sender_psid, response);
 }
+const fillInfo = (sender_psid) => {
+    let response = {
+    "text" : "You need to fill vehicle information below", 
+     "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"Fill vehicle info",
+        "payload":"fill"
+        
+      }
+    ]
+
+  };
+  callSend(sender_psid, response);
+}
+
 const showCars = (sender_psid) => {
     let response = {
         "attachment": {
             "type": "template",
             "payload": {
                 "template_type": "button",
-                "text": "You can choice as folling",
+                "text": "You can choice as following",
                 "buttons": [{
                     "type": "postback",
                     "title": "Car Brands",
