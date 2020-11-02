@@ -166,7 +166,8 @@ app.get('/admin/appointments', async function(req, res) {
         sellerData: sellerData
     });
 });
-app.get('/admin/updateappointment/:doc_id', async function(req, res) {
+// START UPDATING BUYER APPOINTMENT
+app.get('/admin/updatebappointment/:doc_id', async function(req, res) {
     let doc_id = req.params.doc_id;
     const appoinmentRef = db.collection('buyer_appointments').doc(doc_id);
     const doc = await appoinmentRef.get();
@@ -177,31 +178,53 @@ app.get('/admin/updateappointment/:doc_id', async function(req, res) {
         let data = doc.data();
         data.doc_id = doc.id;
         console.log('Document data:', data);
-        res.render('editappointment.ejs', {
+        res.render('editbappointment.ejs', {
             data: data
         });
     }
 });
-app.post('/admin/updateappointment', function(req, res) {
+app.post('/admin/updatebappointment', function(req, res) {
     console.log('REQ:', req.body);
     let data = {
-        name: req.body.name,
-        phone: req.body.phone,
-        brand: req.body.brand,
-        model: req.body.model,
-        location: req.body.location,
-        date: req.body.date,
-        time: req.body.time,
-        message: req.body.message,
         status: req.body.status,
         doc_id: req.body.doc_id,
-        ref: req.body.ref,
         comment: req.body.comment
     }
     db.collection('buyer_appointments').doc(req.body.doc_id).update(data).then(() => {
         res.redirect('/admin/appointments');
     }).catch((err) => console.log('ERROR:', error));
 });
+// END UPDATING BUYER APPOINTMENT
+
+// START UPDATING SELLER APPOINTMENT
+app.get('/admin/updatesappointment/:doc_id', async function(req, res) {
+    let doc_id = req.params.doc_id;
+    const appoinmentRef = db.collection('seller_appointments').doc(doc_id);
+    const doc = await appoinmentRef.get();
+    if (!doc.exists) {
+        console.log('No such document!');
+    } else {
+        console.log('Document data:', doc.data());
+        let data = doc.data();
+        data.doc_id = doc.id;
+        console.log('Document data:', data);
+        res.render('editsappointment.ejs', {
+            data: data
+        });
+    }
+});
+app.post('/admin/updatesappointment', function(req, res) {
+    console.log('REQ:', req.body);
+    let data = {
+        status: req.body.status,
+        doc_id: req.body.doc_id,
+        comment: req.body.comment
+    }
+    db.collection('seller_appointments').doc(req.body.doc_id).update(data).then(() => {
+        res.redirect('/admin/appointments');
+    }).catch((err) => console.log('ERROR:', error));
+});
+// END UPDATING SELLER APPOINTMENT
 /*********************************************
 Gallery page
 **********************************************/
