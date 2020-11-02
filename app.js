@@ -1123,6 +1123,11 @@ const shwoToyota = (sender_psid) => {
     callSend(sender_psid, response);
 }
 
+const showQuickReplyOff =(sender_psid) => {
+  let response = { "text": "You sent quick reply OFF" };
+  callSend(sender_psid, response);
+}
+
 const thankyouReply = (sender_psid, name, img_url) => {
     let response = {
         "attachment": {
