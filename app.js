@@ -415,9 +415,12 @@ function handleQuickReply(sender_psid, received_message) {
     } else if (received_message == 'nissan') {
         userInputs[user_id].brand == 'Nissan';
         showNissan(sender_psid);
-    } else if (received_message == 'suv') {
+    } else if (received_message == 'suvs') {
         userInputs[user_id].brand == 'SUVs';
         showSuv(sender_psid);
+    } else if (received_message == 'sedan') {
+        userInputs[user_id].brand == 'Sedan';
+        showSedan(sender_psid);
     } else {
         switch (received_message) {
             case "fill":
@@ -1100,7 +1103,7 @@ const showAvailcars = (sender_psid) => {
         "quick_replies": [{
                 "content_type": "text",
                 "title": "SUVs",
-                "payload": "suv",
+                "payload": "suvs",
             },
             {
                 "content_type": "text",
