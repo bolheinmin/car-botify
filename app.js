@@ -415,6 +415,9 @@ function handleQuickReply(sender_psid, received_message) {
     } else if (received_message == 'nissan') {
         userInputs[user_id].brand == 'Nissan';
         showNissan(sender_psid);
+    } else if (received_message == 'suv') {
+        userInputs[user_id].brand == 'SUVs';
+        showSuv(sender_psid);
     } else {
         switch (received_message) {
             case "fill":
@@ -613,6 +616,9 @@ const handlePostback = (sender_psid, received_postback) => {
         buyerBotQuestions(current_question, sender_psid);
     } else {
         switch (payload) {
+            case "get_started":
+                hiReply(sender_psid);
+                break;
             case "one":
                 fillInfo(sender_psid);
                 break;
@@ -625,6 +631,9 @@ const handlePostback = (sender_psid, received_postback) => {
                 break;
             case "brands":
                 showBrands(sender_psid);
+                break;
+            case "availcars":
+                showAvailcars(sender_psid);
                 break;
             case "yes":
                 showButtonReplyYes(sender_psid);
@@ -739,7 +748,7 @@ const checkAppointment = async (sender_psid, appointment_ref) => {
                 return callSend(sender_psid, response2)
             });
         }
-      
+
     }
 
 }
@@ -997,7 +1006,7 @@ const hiReply = (sender_psid) => {
             "type": "template",
             "payload": {
                 "template_type": "button",
-                "text": "Hi..Mingalar Par Bya.  How can we help you today?",
+                "text": "Hi..Mingalar Par Bya. How can we help you today?",
                 "buttons": [{
                     "type": "postback",
                     "title": "Sell my car",
@@ -1051,6 +1060,7 @@ const showCars = (sender_psid) => {
     };
     callSend(sender_psid, response);
 }
+// Car Brands
 const showBrands = (sender_psid) => {
     let response = {
         "text": "Choose a brand of vehicles you are looking for",
@@ -1079,6 +1089,25 @@ const showBrands = (sender_psid) => {
             "title": "Nissan",
             "payload": "nissan",
         }]
+    };
+    callSend(sender_psid, response);
+}
+
+// Aavailcars
+const showAvailcars = (sender_psid) => {
+    let response = {
+        "text": "Choose a brand of vehicles you are looking for",
+        "quick_replies": [{
+                "content_type": "text",
+                "title": "SUVs",
+                "payload": "suv",
+            },
+            {
+                "content_type": "text",
+                "title": "Sedan",
+                "payload": "sedan",
+            }
+        ]
     };
     callSend(sender_psid, response);
 }
@@ -1484,6 +1513,225 @@ const showNissan = (sender_psid) => {
     callSend(sender_psid, response);
 }
 // END NISSAN
+
+// START SUV
+const showSuv = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                        "title": "Toyota Hilux surf 1999 SSR G",
+                        "image_url": "https://i.imgur.com/nRdG4yP.jpg",
+                        "subtitle": "MMK : 385 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141094117479193/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141094117479193/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Toyota Hilux surf 1999 SSR G"
+                        }]
+                    },
+                    {
+                        "title": "Toyota Parado 1997,TX package",
+                        "image_url": "https://i.imgur.com/5w6mtdH.jpg",
+                        "subtitle": "MMK : 150 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141097234145548/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141097234145548/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Toyota Parado 1997,TX package"
+                        }]
+                    },
+                    {
+                        "title": "2004 late Toyota Hilux Surf",
+                        "image_url": "https://i.imgur.com/lD8nB8I.jpg",
+                        "subtitle": "MMK : 430 kh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141108330811105/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141108330811105/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:2004 late Toyota Hilux Surf"
+                        }]
+                    },
+                    {
+                        "title": "Toyota Harrier 1999 G Package",
+                        "image_url": "https://i.imgur.com/9FTJXr1.jpg",
+                        "subtitle": "MMK : 180 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141104947478110/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141104947478110/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Toyota Harrier 1999 G Package"
+                        }]
+                    }
+
+                ]
+            }
+        }
+    };
+    callSend(sender_psid, response);
+}
+
+// START SEDAN
+const showSedan = (sender_psid) => {
+    let response = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                        "title": "Toyota Mark 2,2000model,2.0cc, Regalia",
+                        "image_url": "https://i.imgur.com/edMypcb.jpg",
+                        "subtitle": "MMK : 250 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140544484200823/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140544484200823/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Toyota Mark 2,2000model,2.0cc, Regalia"
+                        }]
+                    },
+                    {
+                        "title": "Nissan Cedric 2001",
+                        "image_url": "https://i.imgur.com/zz18si2.jpg",
+                        "subtitle": "MMK : 420 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140526790869259/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140526790869259/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Nissan Cedric 2001"
+                        }]
+                    },
+                    {
+                        "title": "Nissan Sunny 2009",
+                        "image_url": "https://i.imgur.com/vFNZvGg.jpg",
+                        "subtitle": "MMK : 230 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141087177479887/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/141087177479887/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Nissan Sunny 2009"
+                        }]
+                    },
+                    {
+                        "title": "Toyota Brevis 2001,3.0cc",
+                        "image_url": "https://i.imgur.com/0azLEeH.jpg",
+                        "subtitle": "MMK : 320 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140619837526621/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140619837526621/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Toyota Brevis 2001,3.0cc"
+                        }]
+                    },
+                    {
+                        "title": "Toyota Belta 2009",
+                        "image_url": "https://i.imgur.com/ZHWuIbz.jpg",
+                        "subtitle": "MMK : 220 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140841997504405/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140841997504405/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Toyota Belta 2009"
+                        }]
+                    },
+                    {
+                        "title": "Honda Insight 2009",
+                        "image_url": "https://i.imgur.com/ykHdyGd.jpg",
+                        "subtitle": "MMK : 176 lkh",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140847464170525/",
+                            "webview_height_ratio": "tall",
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/101330348122237/posts/140847464170525/",
+                            "title": "More Information"
+                        }, {
+                            "type": "postback",
+                            "title": "Yes, I'm interested",
+                            "payload": "Model:Honda Insight 2009"
+                        }]
+                    }
+                ]
+            }
+        }
+    };
+    callSend(sender_psid, response);
+}
 const showQuickReplyOff = (sender_psid) => {
     let response = { "text": "You sent quick reply OFF" };
     callSend(sender_psid, response);
@@ -1538,23 +1786,13 @@ function testDelete(sender_psid) {
 }
 const defaultReply = (sender_psid) => {
     let response1 = {
-        "text": "To test text reply, type 'text'"
+        "text": "To Start, please type 'hi'"
     };
     let response2 = {
-        "text": "To test quick reply, type 'quick'"
-    };
-    let response3 = {
-        "text": "To test button reply, type 'button'"
-    };
-    let response4 = {
-        "text": "To test webview, type 'webview'"
+        "text": "To check appointments, please type 'check'"
     };
     callSend(sender_psid, response1).then(() => {
-        return callSend(sender_psid, response2).then(() => {
-            return callSend(sender_psid, response3).then(() => {
-                return callSend(sender_psid, response4);
-            });
-        });
+        return callSend(sender_psid, response2)
     });
 }
 const callSendAPI = (sender_psid, response) => {
@@ -1651,16 +1889,16 @@ const setupPersistentMenu = (res) => {
             "composer_input_disabled": false,
             "call_to_actions": [{
                 "type": "postback",
-                "title": "View My Tasks",
-                "payload": "view-tasks"
+                "title": "Sell my car",
+                "payload": "one"
             }, {
                 "type": "postback",
-                "title": "Add New Task",
-                "payload": "add-task"
+                "title": "Find Me a car",
+                "payload": "two"
             }, {
                 "type": "postback",
-                "title": "Cancel",
-                "payload": "cancel"
+                "title": "My Appointments",
+                "payload": "my-appointments"
             }]
         }, {
             "locale": "default",
