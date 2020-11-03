@@ -139,11 +139,9 @@ app.get('/admin/appointments', async function(req, res) {
     // const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1);
     const snapshot1 = await buyerAppointmentsRef.get();
     const snapshot2 = await sellerAppointmentsRef.get();
-    if (snapshot1.empty) {
+
+    if (snapshot1.empty && snapshot2.empty) {
         res.send('no data');
-    }
-    if (snapshot2.empty) {
-        res.send('no data')
     }
     let buyerData = [];
     let sellerData = [];

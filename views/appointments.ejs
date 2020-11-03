@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <!-- Main Css -->
     <link rel="stylesheet" href="/css/main.css">
-    <!-- Iconfont -->
-    <link rel="stylesheet" href="/icon/icofont/icofont.min.css">
 </head>
 
 <body>
@@ -19,7 +17,6 @@
         <div class="app-title">
             <div>
                 <h1>
-                    <i class="icofont-list"></i>
                     Appointment Lists
                 </h1>
             </div>
@@ -46,12 +43,6 @@
                                                 <th>No</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Location</th>
-                                                <th>Brand</th>
-                                                <th>Model</th>
-                                                <th>Date</th>
-                                                <th>Time</th>
-                                                <th>Message</th>
                                                 <th>Reference</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -71,37 +62,23 @@
                                                     <%= buyerAppointment.phone %>
                                                 </td>
                                                 <td>
-                                                    <%= buyerAppointment.location %>
-                                                </td>
-                                                <td>
-                                                    <%= buyerAppointment.brand %>
-                                                </td>
-                                                <td>
-                                                    <%= buyerAppointment.model %>
-                                                </td>
-                                                <td>
-                                                    <%= buyerAppointment.date %>
-                                                </td>
-                                                <td>
-                                                    <%= buyerAppointment.time %>
-                                                </td>
-                                                <td>
-                                                    <%= buyerAppointment.message %>
-                                                </td>
-                                                <td>
                                                     <%= buyerAppointment.ref %>
                                                 </td>
                                                 <td>
                                                     <%= buyerAppointment.status %>
                                                 </td>
                                                 <td>
-                                                    <a href="updatebappointment/<%= buyerAppointment.doc_id %>" class="btn btn-warning" title="Edit">
-                                                        <i class="icofont-ui-settings"></i>
+                                                  <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#buyerAppointmentDetail" title="Detail">
+                                                        Detail
+                                                    </button>
+                                                    <a href="updatebappointment/<%= buyerAppointment.doc_id %>" class="btn btn-outline-warning" title="Edit">
+                                                        Edit
                                                     </a>
                                                     <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">
                                                         <input type="hidden" name="id" value="">
-                                                        <button class="btn btn-outline-danger" title="Delete">
-                                                            <i class="icofont-close"></i>
+                                                        <button class="btn btn-danger" title="Delete">
+                                                          Delete
                                                         </button>
                                                     </form>
                                                 </td>
@@ -121,11 +98,6 @@
                                                 <th>No</th>
                                                 <th>Name</th>
                                                 <th>Phone</th>
-                                                <th>Location</th>
-                                                <th>Brand</th>
-                                                <th>Model</th>
-                                                <th>Date</th>
-                                                <th>Time</th>
                                                 <th>Reference</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -136,43 +108,32 @@
                                             <% sellerData.forEach(function(sellerAppointment){ %>
                                             <tr>
                                                 <td>
-                                                    <%= i++ %>
+                                                  <%= i++ %>
                                                 </td>
                                                 <td>
-                                                    <%= sellerAppointment.name %>
+                                                  <%= sellerAppointment.name %>
                                                 </td>
                                                 <td>
-                                                    <%= sellerAppointment.phone %>
+                                                  <%= sellerAppointment.phone %>
                                                 </td>
                                                 <td>
-                                                    <%= sellerAppointment.location %>
+                                                  <%= sellerAppointment.ref %>
                                                 </td>
                                                 <td>
-                                                    <%= sellerAppointment.vBrand %>
+                                                  <%= sellerAppointment.status %>
                                                 </td>
                                                 <td>
-                                                    <%= sellerAppointment.vModel %>
-                                                </td>
-                                                <td>
-                                                    <%= sellerAppointment.date %>
-                                                </td>
-                                                <td>
-                                                    <%= sellerAppointment.time %>
-                                                </td>
-                                                <td>
-                                                    <%= sellerAppointment.ref %>
-                                                </td>
-                                                <td>
-                                                    <%= sellerAppointment.status %>
-                                                </td>
-                                                <td>
-                                                    <a href="updatesappointment/<%= sellerAppointment.doc_id %>" class="btn btn-warning" title="Edit">
-                                                        <i class="icofont-ui-settings"></i>
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#sellerAppointmentDetail">
+                                                      Detail
+                                                    </button>
+                                                    <a href="updatesappointment/<%= sellerAppointment.doc_id %>" class="btn btn-outline-warning" title="Edit">
+                                                      Edit
                                                     </a>
                                                     <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">
                                                         <input type="hidden" name="id" value="">
-                                                        <button class="btn btn-outline-danger" title="Delete">
-                                                            <i class="icofont-close"></i>
+                                                        <button class="btn btn-danger" title="Delete">
+                                                            Delete
                                                         </button>
                                                     </form>
                                                 </td>
@@ -201,3 +162,100 @@
 </body>
 
 </html>
+
+<!-- Buyer Appointment Detail Modal -->
+<div class="modal fade" id="buyerAppointmentDetail" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Ref no - <%= buyerAppointment.model %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Name</dt>
+                    <dd class="col-sm-9"><%= buyerAppointment.name %></dd>
+                    <dt class="col-sm-3">Vehicle</dt>
+                    <dd class="col-sm-9">
+                        <dl class="row">
+                            <dt class="col-sm-2">Brand</dt>
+                            <dd class="col-sm-10"><%= buyerAppointment.brand %></dd>
+                            <dt class="col-sm-2">Model</dt>
+                            <dd class="col-sm-10"><%= buyerAppointment.model %></dd>
+                        </dl>
+                    </dd>
+                    <dt class="col-sm-3">Phone</dt>
+                    <dd class="col-sm-9"><%= buyerAppointment.phone %></dd>
+                    <dt class="col-sm-3">Location</dt>
+                    <dd class="col-sm-9"><%= buyerAppointment.location %></dd>
+                    <dt class="col-sm-3">Date</dt>
+                    <dd class="col-sm-9"><%= buyerAppointment.date %></dd>
+                    <dt class="col-sm-3">Time</dt>
+                    <dd class="col-sm-9"><%= buyerAppointment.time %></dd>  
+                    <dt class="col-sm-3">Message</dt>
+                    <dd class="col-sm-9"><%= buyerAppointment.message %></dd>
+                    <dt class="col-sm-3">Status</dt>
+                    <dd class="col-sm-9"><%= buyerAppointment.status %></dd>      
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Seller Appointment Detail Modal -->
+<div class="modal fade" id="sellerAppointmentDetail" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Reseller.name %></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Name</dt>
+                    <dd class="col-sm-9"><%= sellerAppointment.name %></dd>
+                    <dt class="col-sm-3">Vehicle</dt>
+                    <dd class="col-sm-9">
+                        <dl class="row">
+                            <dt class="col-sm-2">Brand</dt>
+                            <dd class="col-sm-10"><%= sellerAppointment.vBrand %></dd>
+                            <dt class="col-sm-2">Year</dt>
+                            <dd class="col-sm-10"><%= sellerAppointment.vYear %></dd>
+                            <dt class="col-sm-2">Model</dt>
+                            <dd class="col-sm-10"><%= sellerAppointment.vModel %></dd>
+                            <dt class="col-sm-2">Kilo</dt>
+                            <dd class="col-sm-10"><%= sellerAppointment.vKilo %></dd>
+                            <dt class="col-sm-2">Condition</dt>
+                            <dd class="col-sm-10"><%= sellerAppointment.vCondition %></dd>
+                            <dt class="col-sm-2">Description</dt>
+                            <dd class="col-sm-10"><%= sellerAppointment.vDescription %></dd>
+                            <dt class="col-sm-2">Cost</dt>
+                            <dd class="col-sm-10"><%= sellerAppointment.vCost %></dd>
+                        </dl>
+                    </dd>
+                    <dt class="col-sm-3">Phone</dt>
+                    <dd class="col-sm-9"><%= sellerAppointment.phone %></dd>
+                    <dt class="col-sm-3">Location</dt>
+                    <dd class="col-sm-9"><%= sellerAppointment.location %></dd>
+                    <dt class="col-sm-3">Date</dt>
+                    <dd class="col-sm-9"><%= sellerAppointment.date %></dd>
+                    <dt class="col-sm-3">Time</dt>
+                    <dd class="col-sm-9"><%= sellerAppointment.time %></dd>
+                    <dt class="col-sm-3">Status</dt>
+                    <dd class="col-sm-9"><%= sellerAppointment.status %></dd>      
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -3,33 +3,14 @@
  * Vali Admin
  * Author: Pratik Borsadiya
  * ================================*/
-/*@import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700);*/
-/*@import url(https://fonts.googleapis.com/css?family=Niconne);*/
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700);
+@import url(https://fonts.googleapis.com/css?family=Niconne);
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-
-@font-face
-{
-  font-family: 'Montserrat_Regular';
-  src: url('../fonts/Montserrat/Montserrat-Regular.ttf');
-}
-
-@font-face
-{
-  font-family: 'CrimsonText_Regular';
-  src: url('../fonts/Crimson_Text/CrimsonText-Regular.ttf');
-}
-
-@font-face
-{
-  font-family: 'CrimsonText_Bold';
-  src: url('../fonts/Crimson_Text/CrimsonText-Bold.ttf');
-}
-
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -57,7 +38,7 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Montserrat_Regular", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -81,17 +62,13 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "Montserrat_Regular", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
   text-align: left;
   background-color: #FFF;
-}
-
-i.icofont-navigation-menu{
-  font-size: 25px;
 }
 
 [tabindex="-1"]:focus {
@@ -2666,7 +2643,7 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #FFF;
-  background-color: #E91E63;
+  background-color: #00635a;
   border-color: #00564e;
 }
 
@@ -5364,7 +5341,7 @@ a.badge:hover, a.badge:focus {
 
 a.badge-primary:hover, a.badge-primary:focus {
   color: #FFF;
-  background-color: #E91E63;
+  background-color: #00635a;
 }
 
 a.badge-primary:focus, a.badge-primary.focus {
@@ -6399,7 +6376,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Montserrat_Regular", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6512,7 +6489,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Montserrat_Regular", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6995,7 +6972,7 @@ a.close.disabled {
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #E91E63 !important;
+  background-color: #00635a !important;
 }
 
 .bg-secondary {
@@ -11463,7 +11440,7 @@ fieldset[disabled] .datepicker table tr td.selected.highlighted.focus {
 .datepicker table tr td.active.highlighted:hover {
   color: #ffffff;
   background-color: #009688;
-  border-color: #E2335E;
+  border-color: #007d71;
 }
 
 .datepicker table tr td.active:active,
@@ -11474,7 +11451,7 @@ fieldset[disabled] .datepicker table tr td.selected.highlighted.focus {
 .open > .dropdown-toggle.datepicker table tr td.active.highlighted {
   color: #ffffff;
   background-color: #009688;
-  border-color: #E2335E;
+  border-color: #007d71;
 }
 
 .datepicker table tr td.active:active:hover,
@@ -11496,7 +11473,7 @@ fieldset[disabled] .datepicker table tr td.selected.highlighted.focus {
 .open > .dropdown-toggle.datepicker table tr td.active.focus,
 .open > .dropdown-toggle.datepicker table tr td.active.highlighted.focus {
   color: #ffffff;
-  background-color: #E2335E;
+  background-color: #007d71;
   border-color: #193c5a;
 }
 
@@ -11582,7 +11559,7 @@ fieldset[disabled] .datepicker table tr td.active.highlighted.focus {
 .datepicker table tr td span.active.disabled:hover:hover {
   color: #ffffff;
   background-color: #009688;
-  border-color: #E2335E;
+  border-color: #007d71;
 }
 
 .datepicker table tr td span.active:active,
@@ -11599,7 +11576,7 @@ fieldset[disabled] .datepicker table tr td.active.highlighted.focus {
 .open > .dropdown-toggle.datepicker table tr td span.active.disabled:hover {
   color: #ffffff;
   background-color: #009688;
-  border-color: #E2335E;
+  border-color: #007d71;
 }
 
 .datepicker table tr td span.active:active:hover,
@@ -11639,7 +11616,7 @@ fieldset[disabled] .datepicker table tr td.active.highlighted.focus {
 .open > .dropdown-toggle.datepicker table tr td span.active.disabled.focus,
 .open > .dropdown-toggle.datepicker table tr td span.active.disabled:hover.focus {
   color: #ffffff;
-  background-color: #E2335E;
+  background-color: #007d71;
   border-color: #193c5a;
 }
 
@@ -12030,7 +12007,7 @@ body.stop-scrolling {
 }
 
 .sweet-alert button:active {
-  background-color: #E91E63;
+  background-color: #00635a;
 }
 
 .sweet-alert button.cancel {
@@ -14844,12 +14821,12 @@ be a descendant of the grid when it is being dragged.
 
 ::-moz-selection {
   color: #FFF;
-  background-color: #E91E63;
+  background-color: #00635a;
 }
 
 ::selection {
   color: #FFF;
-  background-color: #E91E63;
+  background-color: #00635a;
 }
 
 @media (min-width: 768px) {
@@ -14968,7 +14945,7 @@ be a descendant of the grid when it is being dragged.
           flex: 1 0 auto;
   color: #fff;
   text-align: center;
-  font-family: 'CrimsonText_Bold';
+  font-family: 'Niconne';
   padding: 0 15px;
   font-size: 26px;
   font-weight: 400;
@@ -14982,7 +14959,7 @@ be a descendant of the grid when it is being dragged.
             flex: 0 0 auto;
     display: block;
     width: 230px;
-    background-color: #E2335E;
+    background-color: #007d71;
   }
 }
 
@@ -14993,13 +14970,12 @@ be a descendant of the grid when it is being dragged.
 
 .app-sidebar__toggle {
   padding: 0 15px;
-  /*font-family: fontAwesome;*/
+  font-family: fontAwesome;
   color: #fff;
   line-height: 2.4;
   -webkit-transition: background-color 0.3s ease;
   -o-transition: background-color 0.3s ease;
   transition: background-color 0.3s ease;
-  padding-top: 10px;
 }
 
 @media (max-width: 767px) {
@@ -15010,14 +14986,14 @@ be a descendant of the grid when it is being dragged.
   }
 }
 
-/*.app-sidebar__toggle:before {
+.app-sidebar__toggle:before {
   content: "\f0c9";
   font-size: 21px;
-}*/
+}
 
 .app-sidebar__toggle:focus, .app-sidebar__toggle:hover {
   color: #fff;
-  background-color: #E91E63;
+  background-color: #00635a;
   text-decoration: none;
 }
 
@@ -16405,7 +16381,7 @@ be a descendant of the grid when it is being dragged.
 
 .login-content .logo {
   margin-bottom: 40px;
-  font-family: "CrimsonText_Bold";
+  font-family: "Niconne";
   color: #fff;
 }
 
@@ -16521,7 +16497,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .lockscreen-content .logo {
-  font-family: "CrimsonText_Bold";
+  font-family: "Niconne";
   margin-bottom: 40px;
   color: #fff;
 }
