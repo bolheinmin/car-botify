@@ -164,6 +164,24 @@ app.get('/admin/appointments', async function(req, res) {
         sellerData: sellerData
     });
 });
+
+app.get('/admin/detailsappointment/:doc_id', async function(req, res) {
+    let doc_id = req.params.doc_id;
+    const appoinmentRef = db.collection('seller_appointments').doc(doc_id);
+    const doc = await appoinmentRef.get();
+    if (!doc.exists) {
+        console.log('No such document!');
+    } else {
+        console.log('Document data:', doc.data());
+        let data = doc.data();
+        data.doc_id = doc.id;
+        console.log('Document data:', data);
+        res.render('appointments.ejs', {
+            data: data
+        });
+    }
+});
+
 // START UPDATING BUYER APPOINTMENT
 app.get('/admin/updatebappointment/:doc_id', async function(req, res) {
     let doc_id = req.params.doc_id;
