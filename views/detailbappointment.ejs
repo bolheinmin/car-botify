@@ -15,78 +15,46 @@
     <div class="container-fluid my-5">
         <h1 class="text-center">Admin Panel</h1>
         <div class="app-title">
-            <div>
-                <h1> <%= data.ref %> </h1>
-            </div>
-            <ul class="app-breadcrumb breadcrumb side">
-                <a class="btn btn-outline-primary" href="../../admin/appointments">
-                    Back
-                </a>
-            </ul>
+            <div class="row mr-auto">
+	            <ul>
+	                <a class="btn btn-outline-primary" href="../../admin/appointments">
+	                    Back
+	                </a>
+	            </ul>
+	            <div class="ml-3">
+	                <h1>Ref No - <%= data.ref %> </h1>
+	            </div>
+          	</div>
         </div>
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="tile">
                     <div class="tile-body">
                         <dl class="row">
-                            <dt class="col-sm-3">Name</dt>
-                            <dd class="col-sm-9">
-                                <%= data.name %>
-                            </dd>
-                            <dt class="col-sm-3">Vehicle</dt>
-                            <dd class="col-sm-9">
-                                <dl class="row">
-                                    <dt class="col-sm-2">Brand</dt>
-                                    <dd class="col-sm-10">
-                                        <%= data.vBrand %>
-                                    </dd>
-                                    <dt class="col-sm-2">Year</dt>
-                                    <dd class="col-sm-10">
-                                        <%= data.vYear %>
-                                    </dd>
-                                    <dt class="col-sm-2">Model</dt>
-                                    <dd class="col-sm-10">
-                                        <%= data.vModel %>
-                                    </dd>
-                                    <dt class="col-sm-2">Kilo</dt>
-                                    <dd class="col-sm-10">
-                                        <%= data.vKilo %>
-                                    </dd>
-                                    <dt class="col-sm-2">Condition</dt>
-                                    <dd class="col-sm-10">
-                                        <%= data.vCondition %>
-                                    </dd>
-                                    <dt class="col-sm-2">Description</dt>
-                                    <dd class="col-sm-10">
-                                        <%= data.vDescription %>
-                                    </dd>
-                                    <dt class="col-sm-2">Cost</dt>
-                                    <dd class="col-sm-10">
-                                        <%= data.vCost %>
-                                    </dd>
-                                </dl>
-                            </dd>
-                            <dt class="col-sm-3">Phone</dt>
-                            <dd class="col-sm-9">
-                                <%= data.phone %>
-                            </dd>
-                            <dt class="col-sm-3">Location</dt>
-                            <dd class="col-sm-9">
-                                <%= data.location %>
-                            </dd>
-                            <dt class="col-sm-3">Date</dt>
-                            <dd class="col-sm-9">
-                                <%= data.date %>
-                            </dd>
-                            <dt class="col-sm-3">Time</dt>
-                            <dd class="col-sm-9">
-                                <%= data.time %>
-                            </dd>
-                            <dt class="col-sm-3">Status</dt>
-                            <dd class="col-sm-9">
-                                <%= data.status %>
-                            </dd>
-                        </dl>
+		                    <dt class="col-sm-2">Name</dt>
+		                    <dd class="col-sm-10"><%= buyerAppointment.name %></dd>
+		                    <dt class="col-sm-2">Vehicle</dt>
+		                    <dd class="col-sm-10">
+		                        <dl class="row">
+		                            <dt class="col-sm-2">Brand</dt>
+		                            <dd class="col-sm-10"><%= buyerAppointment.brand %></dd>
+		                            <dt class="col-sm-2">Model</dt>
+		                            <dd class="col-sm-10"><%= buyerAppointment.model %></dd>
+		                        </dl>
+		                    </dd>
+		                    <dt class="col-sm-2">Phone</dt>
+		                    <dd class="col-sm-10"><%= buyerAppointment.phone %></dd>
+		                    <dt class="col-sm-2">Location</dt>
+		                    <dd class="col-sm-10"><%= buyerAppointment.location %></dd>
+		                    <dt class="col-sm-2">Date</dt>
+		                    <dd class="col-sm-10"><%= buyerAppointment.date %></dd>
+		                    <dt class="col-sm-2">Time</dt>
+		                    <dd class="col-sm-10"><%= buyerAppointment.time %></dd>  
+		                    <dt class="col-sm-2">Message</dt>
+		                    <dd class="col-sm-10"><%= buyerAppointment.message %></dd>
+		                    <dt class="col-sm-2">Status</dt>
+		                    <dd class="col-sm-10"><%= buyerAppointment.status %></dd>   
+		                </dl>
                     </div>
                 </div>
             </div>

@@ -17,12 +17,16 @@
     <div class="container-fluid my-5">
         <h1 class="text-center">Admin Panel</h1>
         <div class="app-title">
-            <div>
-                <h1>
-                    <i class="icofont-list"></i>
-                    Appointment Lists
-                </h1>
+          <div class="row mr-auto">
+            <ul>
+                <a class="btn btn-outline-primary" href="../../admin/appointments">
+                    Back
+                </a>
+            </ul>
+            <div class="ml-3">
+                <h1>Ref No - <%= data.ref %> </h1>
             </div>
+          </div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -182,8 +186,8 @@
                 <dl class="row">
                     <dt class="col-sm-3">Name</dt>
                     <dd class="col-sm-9"><%= buyerAppointment.name %></dd>
-                    <dt class="col-sm-3">Vehicle</dt>
-                    <dd class="col-sm-9">
+                    <dt class="col-sm-2">Vehicle</dt>
+                    <dd class="col-sm-10">
                         <dl class="row">
                             <dt class="col-sm-2">Brand</dt>
                             <dd class="col-sm-10"><%= buyerAppointment.brand %></dd>
@@ -224,10 +228,10 @@
             </div>
             <div class="modal-body">
                 <dl class="row">
-                    <dt class="col-sm-3">Name</dt>
-                    <dd class="col-sm-9"><%= sellerAppointment.name %></dd>
-                    <dt class="col-sm-3">Vehicle</dt>
-                    <dd class="col-sm-9">
+                    <dt class="col-sm-2">Name</dt>
+                    <dd class="col-sm-10"><%= sellerAppointment.name %></dd>
+                    <dt class="col-sm-2">Vehicle</dt>
+                    <dd class="col-sm-10">
                         <dl class="row">
                             <dt class="col-sm-2">Brand</dt>
                             <dd class="col-sm-10"><%= sellerAppointment.vBrand %></dd>
