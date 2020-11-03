@@ -995,7 +995,7 @@ const saveBuyerAppointment = (arg, sender_psid) => {
         text += " We wil call you to confirm soon" + "\u000A";
         text += "Your booking reference number is:";
         let refNo = data.ref;
-        let response = {
+        let response1 = {
             "text": text
         };
         let response2 = {
