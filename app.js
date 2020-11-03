@@ -165,6 +165,7 @@ app.get('/admin/appointments', async function(req, res) {
     });
 });
 
+// Detail Seller Appointment
 app.get('/admin/detailsappointment/:doc_id', async function(req, res) {
     let doc_id = req.params.doc_id;
     const appoinmentRef = db.collection('seller_appointments').doc(doc_id);
@@ -176,7 +177,25 @@ app.get('/admin/detailsappointment/:doc_id', async function(req, res) {
         let data = doc.data();
         data.doc_id = doc.id;
         console.log('Document data:', data);
-        res.render('appointments.ejs', {
+        res.render('detailsappointment.ejs', {
+            data: data
+        });
+    }
+});
+
+// Detail Buyer Appointment
+app.get('/admin/detailbappointment/:doc_id', async function(req, res) {
+    let doc_id = req.params.doc_id;
+    const appoinmentRef = db.collection('buyer_appointments').doc(doc_id);
+    const doc = await appoinmentRef.get();
+    if (!doc.exists) {
+        console.log('No such document!');
+    } else {
+        console.log('Document data:', doc.data());
+        let data = doc.data();
+        data.doc_id = doc.id;
+        console.log('Document data:', data);
+        res.render('detailbappointment.ejs', {
             data: data
         });
     }
