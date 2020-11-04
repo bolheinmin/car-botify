@@ -137,7 +137,7 @@ app.post('/login',function(req,res){
     if(username == 'admin' && password == 'process.env.ADMIN_PW'){
       sess.username = 'admin';
       sess.login = true;
-      res.send('login successful');
+      res.render('/admin/appointments');
     }else{
       res.send('login failed');
     }   
@@ -147,7 +147,7 @@ app.get('/login',function(req,res){
     sess = req.session;
 
     if(sess.login){
-       res.send('You are already login. <a href="logout">logout</a>');
+       res.render('/admin/appointments');
     }else{
       res.render('login.ejs');
     } 
@@ -202,10 +202,16 @@ app.get('/admin/appointments', async function(req, res) {
         sellerData.push(sellerAappointment);
     });
     console.log('DATA:', buyerData);
-    res.render('appointments.ejs', {
+    sess = req.session;
+    console.log('SESS:', sess); 
+    if(sess.login){
+        res.render('appointments.ejs', {
         buyerData: buyerData,
         sellerData: sellerData
     });
+    } else {
+        res.send('you are not authorized to view this page');
+    }
 });
 
 // Detail Seller Appointment
