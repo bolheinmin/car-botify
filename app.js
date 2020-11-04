@@ -157,7 +157,7 @@ app.get('/login',function(req,res){
 app.get('/admin/logout',function(req,res){ 
     //sess = req.session;   
     req.session.destroy(null);  
-    res.redirect('login');
+    res.redirect('../login');
 });
 
 app.get('/publicpage',function(req,res){    
