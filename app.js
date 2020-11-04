@@ -316,14 +316,14 @@ app.post('/admin/deleteBuyerAppointment', function(req,res){
     db.collection('buyer_appointments').doc(req.body.doc_id).delete().then(() => {
         res.redirect('/admin/appointments');
     }).catch((err) => console.log('ERROR:', error));
-}  
+});
 
 app.post('/admin/deleteSellerAppointment', function(req,res){
     let doc_id = req.body.doc_id;
     db.collection('seller_appointments').doc(req.body.doc_id).delete().then(() => {
         res.redirect('/admin/appointments');
     }).catch((err) => console.log('ERROR:', error));
-}  
+});
 // End Admin Appointments
 
 //Set up Get Started Button. To run one time
