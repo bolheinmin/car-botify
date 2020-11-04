@@ -313,7 +313,14 @@ app.post('/admin/updatesappointment', function(req, res) {
 // Start Delete Appointment
 app.post('/admin/deleteBuyerAppointment', function(req,res){
     let doc_id = req.body.doc_id;
-    db.collection('buyer_appointments').doc(req.body.doc_id).delete(doc_id).then(() => {
+    db.collection('buyer_appointments').doc(req.body.doc_id).delete().then(() => {
+        res.redirect('/admin/appointments');
+    }).catch((err) => console.log('ERROR:', error));
+}  
+
+app.post('/admin/deleteSellerAppointment', function(req,res){
+    let doc_id = req.body.doc_id;
+    db.collection('seller_appointments').doc(req.body.doc_id).delete().then(() => {
         res.redirect('/admin/appointments');
     }).catch((err) => console.log('ERROR:', error));
 }  
