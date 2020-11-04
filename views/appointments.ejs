@@ -83,8 +83,8 @@
                                                     <a href="updatebappointment/<%= buyerAppointment.doc_id %>" class="btn btn-outline-warning" title="Edit">
                                                         Edit
                                                     </a>
-                                                    <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="">
-                                                        <input type="hidden" name="id" value="">
+                                                    <form class="d-inline-block" onsubmit="return confirm('Are you sure want to delete?')" method="POST" action="deleteBuyerAppointment">
+                                                        <input type="hidden" name="doc_id" value="<%= buyerAppointment.doc_id %>">
                                                         <button class="btn btn-danger" title="Delete">
                                                             Delete
                                                         </button>

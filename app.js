@@ -154,7 +154,7 @@ app.get('/login',function(req,res){
     
 });
 
-app.get('/logout',function(req,res){ 
+app.get('/admin/logout',function(req,res){ 
     //sess = req.session;   
     req.session.destroy(null);  
     res.redirect('login');
@@ -309,6 +309,14 @@ app.post('/admin/updatesappointment', function(req, res) {
     }).catch((err) => console.log('ERROR:', error));
 });
 // END UPDATING SELLER APPOINTMENT
+
+// Start Delete Appointment
+app.post('/admin/deleteBuyerAppointment', function(req,res){
+    let doc_id = req.body.doc_id;
+    db.collection('buyer_appointments').doc(req.body.doc_id).delete(doc_id).then(() => {
+        res.redirect('/admin/appointments');
+    }).catch((err) => console.log('ERROR:', error));
+}  
 // End Admin Appointments
 
 //Set up Get Started Button. To run one time
