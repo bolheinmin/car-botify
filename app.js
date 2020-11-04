@@ -134,7 +134,7 @@ app.post('/login',function(req,res){
     let username = req.body.username;
     let password = req.body.password;
 
-    if(username == 'admin' && password == 'process.env.ADMIN_PW'){
+    if(username == 'admin' && password == process.env.ADMIN_PW){
       sess.username = 'admin';
       sess.login = true;
       res.render('/admin/appointments');
