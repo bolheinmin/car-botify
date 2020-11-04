@@ -137,7 +137,7 @@ app.post('/login',function(req,res){
     if(username == 'admin' && password == process.env.ADMIN_PW){
       sess.username = 'admin';
       sess.login = true;
-      res.render('/admin/appointments');
+      res.redirect('/admin/appointments');
     }else{
       res.send('login failed');
     }   
@@ -147,7 +147,7 @@ app.get('/login',function(req,res){
     sess = req.session;
 
     if(sess.login){
-       res.render('/admin/appointments');
+       res.redirect('/admin/appointments');
     }else{
       res.render('login.ejs');
     } 
