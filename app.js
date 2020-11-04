@@ -3,11 +3,9 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const APP_URL = process.env.APP_URL;
 //new text
 // Imports dependencies and set up http server
-const {
-    uuid
-} = require('uuidv4'), {
-        format
-    } = require('util'),
+const 
+    { uuid } = require('uuidv4'), 
+    { format } = require('util'),
     request = require('request'),
     express = require('express'),
     body_parser = require('body-parser'),
@@ -16,10 +14,15 @@ const {
     fs = require('fs'),
     multer = require('multer'),
     app = express();
+
 const uuidv4 = uuid();
+const session = require('express-session');
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
+app.set('trust proxy', 1);
+app.use(session({secret: 'effystonem'}));
 app.use(express.static(__dirname + '/public'));
+
 const buyer_bot_questions = {
     "q1": "Which day do you want to see? (dd-mm-yyyy)",
     "q2": "Choose Time. (PS :You can viewd within 9:00 to 17:00.) (hh:mm)",
@@ -53,7 +56,7 @@ const seller_bot_questions = {
     "que12": "Would you like to leave a phone number?",
     "que13": "Where do you want to meet? PS : Customers are most meet at Tea Shop, Car Market Place, Restaurants and so on.",
 }
-
+let sess;
 let current_question = '';
 let user_id = '';
 let userInputs = [];
@@ -123,16 +126,56 @@ app.use('/uploads', express.static('uploads'));
 app.get('/', function(req, res) {
     res.send('your app is up and running');
 });
-app.get('/test', function(req, res) {
-    res.render('test.ejs');
+
+// Start Login & Logout\
+app.post('/login',function(req,res){    
+    sess = req.session;
+
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if(username == 'admin' && password == 'process.env.ADMIN_PW'){
+      sess.username = 'admin';
+      sess.login = true;
+      res.send('login successful');
+    }else{
+      res.send('login failed');
+    }   
 });
-app.post('/test', function(req, res) {
-    const sender_psid = req.body.sender_id;
-    let response = {
-        "text": "You  click delete button"
-    };
-    callSend(sender_psid, response);
+
+app.get('/login',function(req,res){    
+    sess = req.session;
+
+    if(sess.login){
+       res.send('You are already login. <a href="logout">logout</a>');
+    }else{
+      res.render('login.ejs');
+    } 
+    
 });
+
+app.get('/logout',function(req,res){ 
+    //sess = req.session;   
+    req.session.destroy(null);  
+    res.redirect('login');
+});
+
+app.get('/publicpage',function(req,res){    
+    res.render('publicpage.ejs');
+});
+
+
+app.get('/privatepage',function(req,res){ 
+    sess = req.session;
+    console.log('SESS:', sess); 
+    if(sess.login){
+       res.render('privatepage.ejs');
+    }else{
+      res.send('you are not authorized to view this page');
+    }   
+});
+// End Login & Logout
+// Start Admin Appointments
 app.get('/admin/appointments', async function(req, res) {
     const buyerAppointmentsRef = db.collection('buyer_appointments');
     const sellerAppointmentsRef = db.collection('seller_appointments');
@@ -260,101 +303,8 @@ app.post('/admin/updatesappointment', function(req, res) {
     }).catch((err) => console.log('ERROR:', error));
 });
 // END UPDATING SELLER APPOINTMENT
-/*********************************************
-Gallery page
-**********************************************/
-app.get('/showimages/:sender_id/', function(req, res) {
-    const sender_id = req.params.sender_id;
-    let data = [];
-    db.collection("images").limit(20).get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            let img = {};
-            img.id = doc.id;
-            img.url = doc.data().url;
-            data.push(img);
-        });
-        console.log("DATA", data);
-        res.render('gallery.ejs', {
-            data: data,
-            sender_id: sender_id,
-            'page-title': 'welcome to my page'
-        });
-    }).catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-});
-app.post('/imagepick', function(req, res) {
-    const sender_id = req.body.sender_id;
-    const doc_id = req.body.doc_id;
-    console.log('DOC ID:', doc_id);
-    db.collection('images').doc(doc_id).get().then(doc => {
-        if (!doc.exists) {
-            console.log('No such document!');
-        } else {
-            const image_url = doc.data().url;
-            console.log('IMG URL:', image_url);
-            let response = {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "generic",
-                        "elements": [{
-                            "title": "Is this the image you like?",
-                            "image_url": image_url,
-                            "buttons": [{
-                                "type": "postback",
-                                "title": "Yes!",
-                                "payload": "yes",
-                            }, {
-                                "type": "postback",
-                                "title": "No!",
-                                "payload": "no",
-                            }],
-                        }]
-                    }
-                }
-            }
-            callSend(sender_id, response);
-        }
-    }).catch(err => {
-        console.log('Error getting document', err);
-    });
-});
-/*********************************************
-END Gallery Page
-**********************************************/
-//webview test
-app.get('/webview/:sender_id', function(req, res) {
-    const sender_id = req.params.sender_id;
-    res.render('webview.ejs', {
-        title: "Hello!! from WebView",
-        sender_id: sender_id
-    });
-});
-app.post('/webview', upload.single('file'), function(req, res) {
-    let name = req.body.name;
-    let email = req.body.email;
-    let img_url = "";
-    let sender = req.body.sender;
-    console.log("REQ FILE:", req.file);
-    let file = req.file;
-    if (file) {
-        uploadImageToStorage(file).then((img_url) => {
-            db.collection('webview').add({
-                name: name,
-                email: email,
-                image: img_url
-            }).then(success => {
-                console.log("DATA SAVED")
-                thankyouReply(sender, name, img_url);
-            }).catch(error => {
-                console.log(error);
-            });
-        }).catch((error) => {
-            console.error(error);
-        });
-    }
-});
+// End Admin Appointments
+
 //Set up Get Started Button. To run one time
 //eg https://fbstarter.herokuapp.com/setgsbutton
 app.get('/setgsbutton', function(req, res) {
